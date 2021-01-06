@@ -5,19 +5,23 @@
     "start": "umi dev",
     "build": "umi build",
     "postinstall": "umi generate tmp",
-    "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
+    "prettier": "prettier --write \"src/**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "test": "umi-test",
-    "test:coverage": "umi-test --coverage"
+    "test:coverage": "umi-test --coverage",
+    "lint": "umi g tmp && npm run lint:js && npm run lint:style && npm run lint:prettier",
+    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
+    "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+    "lint:prettier": "prettier --check \"src/**/*\" --end-of-line auto",
+    "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
   "lint-staged": {
-    "*.{js,jsx,less,md,json}": [
+    "**/*.less": "stylelint --syntax less",
+    "**/*.{js,jsx,ts,tsx}": "npm run lint-staged:js",
+    "**/*.{js,jsx,tsx,ts,less,md,json}": [
       "prettier --write"
-    ],
-    "*.ts?(x)": [
-      "prettier --parser=typescript --write"
     ]
   },
   "dependencies": {
@@ -29,6 +33,7 @@
   "devDependencies": {
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "@umijs/fabric": "^2.4.10",
     "@umijs/test": "^3.3.3",
     "cross-env": "^7.0.3",
     "lint-staged": "^10.0.7",
