@@ -9,6 +9,8 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  dynamicImport: {},
+  dynamicImport: {
+    loading: '@/components/PageLoading/index',
+  },
   fastRefresh: {},
 });
