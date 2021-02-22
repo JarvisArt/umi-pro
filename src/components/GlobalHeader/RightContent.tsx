@@ -2,11 +2,12 @@ import { Tooltip } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import React from 'react';
 import Avatar from './AvatarDropdown';
+import NoticeIconView from './NoticeIconView';
 import styles from './index.less';
 
 const GlobalHeaderRight: React.SFC = () => {
   return (
-    <div>
+    <div className={styles.right}>
       <Tooltip title="使用文档">
         <a
           style={{
@@ -20,6 +21,7 @@ const GlobalHeaderRight: React.SFC = () => {
           <QuestionCircleOutlined />
         </a>
       </Tooltip>
+      <NoticeIconView />
       <Avatar />
     </div>
   );
