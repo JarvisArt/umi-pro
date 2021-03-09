@@ -4,7 +4,7 @@ import RightContent from '@/components/GlobalHeader/RightContent';
 import logo from '../assets/logo.svg';
 import styles from './BasicLayout.less';
 
-const { Header } = Layout;
+const { Header, Content } = Layout;
 
 const Logo: React.FC = () => {
   return (
@@ -24,7 +24,7 @@ const BasicLayout: React.FC = (props) => {
         <Logo />
         <RightContent />
       </Header>
-      {children}
+      <Content className={styles.content}>{children}</Content>
     </>
   );
 };

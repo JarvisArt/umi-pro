@@ -1,18 +1,26 @@
+import {
+  TeamOutlined,
+  BellOutlined,
+  AppstoreOutlined,
+  QuestionCircleOutlined,
+} from '@ant-design/icons';
 import { Tooltip } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
-import React from 'react';
 import Avatar from './AvatarDropdown';
 import NoticeIconView from './NoticeIconView';
+import classNames from 'classnames';
 import styles from './index.less';
 
 const GlobalHeaderRight: React.SFC = () => {
   return (
     <div className={styles.right}>
+      <Tooltip title="我的项目" className={styles.action}>
+        <AppstoreOutlined />
+      </Tooltip>
+      <Tooltip title="管理中心" className={styles.action}>
+        <TeamOutlined />
+      </Tooltip>
       <Tooltip title="使用文档">
         <a
-          style={{
-            color: 'inherit',
-          }}
           target="_blank"
           href="https://pro.ant.design/docs/getting-started"
           rel="noopener noreferrer"
@@ -21,7 +29,9 @@ const GlobalHeaderRight: React.SFC = () => {
           <QuestionCircleOutlined />
         </a>
       </Tooltip>
-      <NoticeIconView />
+      <NoticeIconView>
+        <BellOutlined className={classNames(styles.action, styles.noticeIcon)} />
+      </NoticeIconView>
       <Avatar />
     </div>
   );

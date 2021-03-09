@@ -3,7 +3,8 @@ export default [
     path: '/',
     component: '@/layouts/BasicLayout',
     routes: [
-      { path: '/', component: '@/pages/index', title: '首页' },
+      { path: '/', redirect: '/apps' },
+      { path: '/apps', component: '@/pages/Apps', title: '我的项目' },
       { path: '/welcome', component: '@/pages/Welcome', title: '欢迎' },
     ],
   },

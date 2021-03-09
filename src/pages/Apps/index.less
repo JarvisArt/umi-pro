@@ -1,0 +1,52 @@
+@import '~antd/es/style/themes/default.less';
+
+.appWrap {
+  padding: 20px 20px 0;
+}
+
+.listItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  background: #fff;
+  background-image: linear-gradient(-20deg, #00cdac 0%, #8ddad5 100%);
+  // background-image: linear-gradient(60deg, #64b3f4 0%, #c2e59c 100%);
+  // background-image: linear-gradient(60deg, #64b3f4 0%, #9ccae5 100%);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: box-shadow 0.3s, border-color 0.3s;
+
+  &:hover {
+    background-image: linear-gradient(-20deg, #00b5cd 0%, #8dceda 100%);
+    border-color: transparent;
+    box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.12),
+      0 5px 12px 4px rgba(0, 0, 0, 0.09);
+  }
+
+  .appIcon {
+    position: absolute;
+    top: 12px;
+    left: 20px;
+  }
+
+  .userIcon {
+    position: absolute;
+    bottom: 12px;
+    left: 21px;
+    &::before {
+      position: absolute;
+      bottom: 0;
+      left: 2px;
+      display: block;
+      width: 12px;
+      height: 1px;
+      background: #fff;
+      content: '';
+    }
+  }
+}

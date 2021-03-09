@@ -1,13 +1,17 @@
-import React from 'react';
 import { Badge } from 'antd';
-import { BellOutlined } from '@ant-design/icons';
 import styles from './index.less';
 
-const NoticeIconView = () => {
+export interface NoticeIconProps {
+  children?: React.ReactElement;
+}
+
+const NoticeIconView: React.FC<NoticeIconProps> = (props) => {
+  const { children } = props;
+
   return (
     <span className={styles.noticeButton}>
-      <Badge count={12} style={{ boxShadow: 'none' }} className={styles.badge}>
-        <BellOutlined className={styles.icon} />
+      <Badge count={12} offset={[-8, 12]} style={{ boxShadow: 'none' }}>
+        {children}
       </Badge>
     </span>
   );
