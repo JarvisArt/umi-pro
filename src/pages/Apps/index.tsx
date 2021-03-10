@@ -1,6 +1,11 @@
-import React from 'react';
-import { List } from 'antd';
-import { DashboardOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  UserOutlined,
+  PlusOutlined,
+  SearchOutlined,
+  EllipsisOutlined,
+  DashboardOutlined,
+} from '@ant-design/icons';
+import { List, Tooltip, Dropdown, Menu, Input, Button } from 'antd';
 import styles from './index.less';
 
 const list = [
@@ -31,31 +36,42 @@ const list = [
 ];
 
 const Apps = () => {
+  const ellipsisMenu = (
+    <Menu>
+      <Menu.Item>编辑</Menu.Item>
+      <Menu.Item>删除</Menu.Item>
+    </Menu>
+  );
+
   return (
-    <div className={styles.appWrap}>
+    <>
+      <div className={styles.header}>
+        <Input placeholder="输入项目名称" className={styles.search} suffix={<SearchOutlined />} />
+        <Button type="primary">
+          <PlusOutlined /> 新建
+        </Button>
+      </div>
       <List
         rowKey="id"
-        grid={{
-          gutter: 20,
-          xs: 1,
-          sm: 2,
-          md: 3,
-          lg: 3,
-          xl: 4,
-          xxl: 4,
-        }}
+        grid={{ gutter: 20, column: 4, xxl: 5 }}
+        style={{ padding: '20px 20px 0' }}
         dataSource={list}
         renderItem={(item) => (
           <List.Item key={item.id}>
             <div className={styles.listItem}>
-              <DashboardOutlined className={styles.appIcon} style={{ color: '#fff' }} />
               <span>{item.name}</span>
-              <UserOutlined className={styles.userIcon} style={{ color: '#fff' }} />
+              <DashboardOutlined className={styles.appIcon} />
+              <Tooltip arrowPointAtCenter placement="right" title="项目对接人：Admin">
+                <UserOutlined className={styles.userIcon} />
+              </Tooltip>
+              <Dropdown overlay={ellipsisMenu} trigger={['click']}>
+                <EllipsisOutlined className={styles.ellipsisIcon} />
+              </Dropdown>
             </div>
           </List.Item>
         )}
       />
-    </div>
+    </>
   );
 };
 

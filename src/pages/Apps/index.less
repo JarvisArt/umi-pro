@@ -1,7 +1,36 @@
 @import '~antd/es/style/themes/default.less';
 
-.appWrap {
-  padding: 20px 20px 0;
+@search-bg: rgb(243, 243, 243);
+
+.countInputWidth(@column) {
+  width: calc((100vw - 20px * (@column + 1)) / @column);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+  padding: 0 20px;
+  background: #fff;
+  box-shadow: 0 0 5px 1px #f1ecec;
+  .search {
+    .countInputWidth(5);
+  }
+  :global {
+    .ant-input-affix-wrapper {
+      color: #aaa;
+      background: @search-bg;
+      border: 0;
+    }
+    .ant-input {
+      background: @search-bg;
+    }
+    .ant-input-affix-wrapper:focus,
+    .ant-input-affix-wrapper-focused {
+      box-shadow: 0 0 0 0;
+    }
+  }
 }
 
 .listItem {
@@ -9,7 +38,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 0;
+  padding: 48px 0;
   color: #fff;
   font-weight: bold;
   font-size: 16px;
@@ -20,7 +49,6 @@
   border-radius: 4px;
   cursor: pointer;
   transition: box-shadow 0.3s, border-color 0.3s;
-
   &:hover {
     background-image: linear-gradient(-20deg, #00b5cd 0%, #8dceda 100%);
     border-color: transparent;
@@ -33,7 +61,6 @@
     top: 12px;
     left: 20px;
   }
-
   .userIcon {
     position: absolute;
     bottom: 12px;
@@ -48,5 +75,20 @@
       background: #fff;
       content: '';
     }
+  }
+  .ellipsisIcon {
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: @screen-xxl) {
+  .header > .search {
+    .countInputWidth(4);
+  }
+  .listItem {
+    padding: 40px 0;
   }
 }
