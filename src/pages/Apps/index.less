@@ -1,6 +1,6 @@
 @import '~antd/es/style/themes/default.less';
 
-@search-bg: rgb(243, 243, 243);
+@search-bg: rgb(240, 240, 240);
 
 .countInputWidth(@column) {
   width: calc((100vw - 20px * (@column + 1)) / @column);
@@ -14,6 +14,9 @@
   padding: 0 20px;
   background: #fff;
   box-shadow: 0 0 5px 1px #f1ecec;
+  .title {
+    font-size: 15px;
+  }
   .search {
     .countInputWidth(5);
   }
