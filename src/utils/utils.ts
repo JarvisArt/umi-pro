@@ -29,3 +29,22 @@ export const getPageTitle = (routes: MenuDataItem[], pathname?: string): string 
   const flatteList = flattenTheTree(routes, 'routes');
   return flatteList.find((route) => route.path === pathname)?.title;
 };
+
+/**
+ * 从路径获取参数
+ * @param {string} pathname 路径
+ * @param {string} param 参数
+ * @return {string}
+ */
+export const parsePathParam = (pathname: string, param: string): string => {
+  const regExp = new RegExp(`\\/${param}\\/(\\w+)($|\\/)`);
+  const match = regExp.exec(pathname);
+  return match ? match[1] : '';
+};
+
+/**
+ * 从路径名称获取appId
+ */
+export const getAppId = (): string => {
+  return parsePathParam(window.location.pathname, 'apps');
+};

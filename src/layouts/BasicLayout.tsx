@@ -4,7 +4,7 @@ import { Layout } from 'antd';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import AppNavbar from '@/components/GlobalHeader/AppNavbar';
 import type { Route, RouterTypes } from '../typings';
-import { getPageTitle } from '@/utils/utils';
+import { getPageTitle, getAppId } from '@/utils/utils';
 import { PRO_TITLE } from '@/utils/constants';
 import { useDocumentTitle } from '@/utils/hooks';
 import logo from '../assets/logo.svg';
@@ -26,6 +26,7 @@ const Logo: React.FC = () => {
 const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
   const { route, children, location = { pathname: '/' } } = props;
 
+  const appId = getAppId();
   const pageTitle = getPageTitle(route?.routes || [], location.pathname);
   useDocumentTitle(pageTitle, PRO_TITLE);
 
@@ -33,7 +34,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
     <>
       <Header className={styles.header}>
         <Logo />
-        <AppNavbar />
+        {appId && <AppNavbar />}
         <RightContent />
       </Header>
       <Content className={styles.content}>{children}</Content>

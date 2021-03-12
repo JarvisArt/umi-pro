@@ -12,7 +12,6 @@ const AppNavBar: React.FC = () => {
     <div className={styles.main}>
       <div className={styles.divider}></div>
       <div className={styles.appName}>蚂蚁金服（测试）</div>
-      <div className={styles.divider}></div>
       <Menu mode="horizontal" theme="dark">
         <Menu.Item key="overview" icon={<DotChartOutlined />}>
           概览
