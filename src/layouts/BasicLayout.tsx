@@ -2,6 +2,7 @@ import React from 'react';
 import { history } from 'umi';
 import { Layout } from 'antd';
 import RightContent from '@/components/GlobalHeader/RightContent';
+import AppNavbar from '@/components/GlobalHeader/AppNavbar';
 import type { Route, RouterTypes } from '../typings';
 import { getPageTitle } from '@/utils/utils';
 import { PRO_TITLE } from '@/utils/constants';
@@ -32,6 +33,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
     <>
       <Header className={styles.header}>
         <Logo />
+        <AppNavbar />
         <RightContent />
       </Header>
       <Content className={styles.content}>{children}</Content>
