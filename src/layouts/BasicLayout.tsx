@@ -2,9 +2,9 @@ import React from 'react';
 import { history } from 'umi';
 import { Layout } from 'antd';
 import RightContent from '@/components/GlobalHeader/RightContent';
-import AppNavbar from '@/components/GlobalHeader/AppNavbar';
+import ProjectNavBar from '@/components/GlobalHeader/ProjectNavBar';
 import type { Route, RouterTypes } from '../typings';
-import { getPageTitle, getAppId } from '@/utils/utils';
+import { getPageTitle, getProjectId } from '@/utils/utils';
 import { PRO_TITLE } from '@/utils/constants';
 import { useDocumentTitle } from '@/utils/hooks';
 import logo from '../assets/logo.svg';
@@ -16,7 +16,7 @@ export type BasicLayoutProps = Partial<RouterTypes<Route>>;
 
 const Logo: React.FC = () => {
   return (
-    <a className={styles.logo} onClick={() => history.push('/apps')}>
+    <a className={styles.logo} onClick={() => history.push('/projects')}>
       <img src={logo} alt="logo" />
       <h1>{PRO_TITLE}</h1>
     </a>
@@ -26,7 +26,7 @@ const Logo: React.FC = () => {
 const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
   const { route, children, location = { pathname: '/' } } = props;
 
-  const appId = getAppId();
+  const projectId = getProjectId();
   const pageTitle = getPageTitle(route?.routes || [], location.pathname);
   useDocumentTitle(pageTitle, PRO_TITLE);
 
@@ -34,7 +34,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
     <>
       <Header className={styles.header}>
         <Logo />
-        {appId && <AppNavbar />}
+        {projectId && <ProjectNavBar />}
         <RightContent />
       </Header>
       <Content className={styles.content}>{children}</Content>

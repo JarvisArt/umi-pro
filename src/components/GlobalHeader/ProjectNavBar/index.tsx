@@ -7,11 +7,11 @@ import {
 import { Menu } from 'antd';
 import styles from './index.less';
 
-const AppNavBar: React.FC = () => {
+const ProjectNavBar: React.FC = () => {
   return (
     <div className={styles.main}>
       <div className={styles.divider}></div>
-      <div className={styles.appName}>蚂蚁金服（测试）</div>
+      <div className={styles.projectName}>蚂蚁金服（测试）</div>
       <Menu mode="horizontal" theme="dark">
         <Menu.Item key="overview" icon={<DotChartOutlined />}>
           概览
@@ -30,4 +30,4 @@ const AppNavBar: React.FC = () => {
   );
 };
 
-export default AppNavBar;
+export default ProjectNavBar;

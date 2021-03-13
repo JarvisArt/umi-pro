@@ -35,7 +35,7 @@ const list = [
   { id: 24, name: 'Angular' },
 ];
 
-const Apps = () => {
+const Projects = () => {
   const ellipsisMenu = (
     <Menu>
       <Menu.Item>编辑</Menu.Item>
@@ -61,7 +61,7 @@ const Apps = () => {
           <List.Item key={item.id}>
             <div className={styles.listItem}>
               <span>{item.name}</span>
-              <DashboardOutlined className={styles.appIcon} />
+              <DashboardOutlined className={styles.dashboardIcon} />
               <Tooltip arrowPointAtCenter placement="right" title="项目对接人：Admin">
                 <UserOutlined className={styles.userIcon} />
               </Tooltip>
@@ -76,4 +76,4 @@ const Apps = () => {
   );
 };
 
-export default Apps;
+export default Projects;

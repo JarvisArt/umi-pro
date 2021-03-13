@@ -43,8 +43,8 @@ export const parsePathParam = (pathname: string, param: string): string => {
 };
 
 /**
- * 从路径名称获取appId
+ * 从路径名称获取projectId
  */
-export const getAppId = (): string => {
-  return parsePathParam(window.location.pathname, 'apps');
+export const getProjectId = (): string => {
+  return parsePathParam(window.location.pathname, 'projects');
 };
