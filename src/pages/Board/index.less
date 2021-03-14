@@ -1,0 +1,27 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  padding: 0 20px;
+  background: #fff;
+  box-shadow: 0 0 5px 1px #f1ecec;
+}
+
+.layout {
+  div {
+    background: #fff;
+  }
+  :global {
+    .react-resizable-handle {
+      opacity: 0;
+    }
+  }
+}
+
+.dragHandle {
+  line-height: 20px;
+}
+.chartWrap {
+  height: calc(100% - 20px);
+}
