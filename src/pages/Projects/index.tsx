@@ -5,7 +5,10 @@ import {
   EllipsisOutlined,
   DashboardOutlined,
 } from '@ant-design/icons';
-import { List, Tooltip, Dropdown, Menu, Input, Button } from 'antd';
+import { List, Tooltip, Dropdown, Menu, Input } from 'antd';
+import { useState, useRef } from 'react';
+import { history } from 'umi';
+import classNames from 'classnames';
 import styles from './index.less';
 
 const list = [
@@ -36,21 +39,35 @@ const list = [
 ];
 
 const Projects = () => {
+  const inputRef = useRef<Input | null>(null);
+  const [searchMode, setSearchMode] = useState<boolean>(false);
+
+  const toggleSearchMode = () => {
+    setSearchMode(!searchMode);
+    if (!searchMode && inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   const ellipsisMenu = (
-    <Menu>
+    <Menu onClick={(e) => e.domEvent.stopPropagation()}>
       <Menu.Item>编辑</Menu.Item>
       <Menu.Item>删除</Menu.Item>
     </Menu>
   );
 
+  const inputClass = classNames(styles.input, {
+    [styles.show]: searchMode,
+  });
+
   return (
     <>
-      <div className={styles.header}>
-        <h3 className={styles.title}>我的项目(1)</h3>
-        <Input placeholder="输入项目名称" className={styles.search} suffix={<SearchOutlined />} />
-        <Button type="primary">
-          <PlusOutlined /> 新建
-        </Button>
+      <div className={styles.addBtn}>
+        <PlusOutlined />
+      </div>
+      <div className={styles.search}>
+        <SearchOutlined style={{ cursor: 'pointer' }} onClick={toggleSearchMode} />
+        <Input ref={inputRef} placeholder="输入项目名称" className={inputClass} />
       </div>
       <List
         rowKey="id"
@@ -58,7 +75,7 @@ const Projects = () => {
         style={{ padding: '20px 20px 0' }}
         dataSource={list}
         renderItem={(item) => (
-          <List.Item key={item.id}>
+          <List.Item key={item.id} onClick={() => history.push('/projects/fe3234/board')}>
             <div className={styles.listItem}>
               <span>{item.name}</span>
               <DashboardOutlined className={styles.dashboardIcon} />
@@ -66,7 +83,10 @@ const Projects = () => {
                 <UserOutlined className={styles.userIcon} />
               </Tooltip>
               <Dropdown overlay={ellipsisMenu} trigger={['click']}>
-                <EllipsisOutlined className={styles.ellipsisIcon} />
+                <EllipsisOutlined
+                  className={styles.ellipsisIcon}
+                  onClick={(e) => e.stopPropagation()}
+                />
               </Dropdown>
             </div>
           </List.Item>

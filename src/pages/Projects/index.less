@@ -1,38 +1,54 @@
 @import '~antd/es/style/themes/default.less';
 
-@search-bg: rgb(240, 240, 240);
-
-.countInputWidth(@column) {
-  width: calc((100vw - 20px * (@column + 1)) / @column);
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 48px;
-  padding: 0 20px;
-  background: #fff;
-  box-shadow: 0 0 5px 1px #f1ecec;
-  .title {
-    font-size: 15px;
+.search {
+  position: fixed;
+  top: 10px;
+  right: 305px;
+  z-index: 100;
+  color: #fff;
+  line-height: 28px;
+  .input {
+    width: 210px;
+    width: 0;
+    height: 28px;
+    padding: 0;
+    overflow: hidden;
   }
-  .search {
-    .countInputWidth(5);
+  .show {
+    width: 210px;
+    margin-left: 8px;
+    padding: 4px 11px;
   }
   :global {
-    .ant-input-affix-wrapper {
-      color: #aaa;
-      background: @search-bg;
+    .ant-input {
       border: 0;
     }
-    .ant-input {
-      background: @search-bg;
-    }
-    .ant-input-affix-wrapper:focus,
-    .ant-input-affix-wrapper-focused {
+    .ant-input:focus {
       box-shadow: 0 0 0 0;
     }
+  }
+}
+
+.addBtn {
+  position: fixed;
+  right: 10px;
+  bottom: 80px;
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  font-size: 20px;
+  background: @primary-color;
+  border: 4px solid #fff;
+  border-radius: 50px;
+  box-shadow: 0 0 10px 1px #aaa;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+  &:hover {
+    box-shadow: 0 0 16px 2px #999;
   }
 }
 
@@ -88,9 +104,6 @@
 }
 
 @media screen and (max-width: @screen-xxl) {
-  .header > .search {
-    .countInputWidth(4);
-  }
   .listItem {
     padding: 40px 0;
   }
