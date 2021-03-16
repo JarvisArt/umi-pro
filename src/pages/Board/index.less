@@ -6,12 +6,41 @@
   padding: 0 20px;
   background: #fff;
   box-shadow: 0 0 5px 1px #f1ecec;
+
+  .tabs {
+    display: flex;
+    align-items: flex-end;
+    max-width: 50vw;
+    height: 50px;
+    :global {
+      .ant-tabs-nav {
+        margin-bottom: 0;
+      }
+      .ant-tabs-card > .ant-tabs-nav .ant-tabs-tab {
+        background: #fff;
+      }
+      .ant-tabs-card > .ant-tabs-nav .ant-tabs-tab-active {
+        background: #f0f2f5;
+      }
+      .ant-tabs-card.ant-tabs-top > .ant-tabs-nav .ant-tabs-tab-active {
+        border-bottom-color: #f0f2f5;
+      }
+      .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+        color: #000;
+      }
+    }
+  }
+  .timeLabel {
+    display: inline-block;
+    padding: 0 10px;
+    line-height: 30px;
+    background: rgb(250, 250, 250);
+    border: 1px solid #d9d9d9;
+    border-right: 0;
+  }
 }
 
 .layout {
-  div {
-    background: #fff;
-  }
   :global {
     .react-resizable-handle {
       opacity: 0;
@@ -20,8 +49,16 @@
 }
 
 .dragHandle {
+  padding: 6px 6px;
   line-height: 20px;
+  background: #fff;
+  border: 1px dashed #ccc;
+  border-bottom: 0;
+  cursor: default;
 }
 .chartWrap {
   height: calc(100% - 20px);
+  background: #fff;
+  border: 1px dashed #ccc;
+  border-top: 0;
 }
