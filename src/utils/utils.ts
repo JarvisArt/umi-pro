@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash';
 import type { MenuDataItem } from '../typings';
 
 /**
@@ -9,7 +10,7 @@ import type { MenuDataItem } from '../typings';
 export const flattenTheTree = (list: any[], childKey: string): any[] => {
   let result = [] as any[];
   list.forEach((item) => {
-    const replicaItem = JSON.parse(JSON.stringify(item));
+    const replicaItem = cloneDeep(item);
     delete replicaItem[childKey];
     result.push(replicaItem);
     if (item[childKey] instanceof Array && item[childKey].length > 0) {

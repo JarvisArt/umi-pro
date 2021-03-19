@@ -1,6 +1,5 @@
 @import '~antd/es/style/themes/default.less';
-
-@pro-header-hover-bg: #252a3d;
+@import '~@/styles/variables';
 
 .menu {
   :global(.anticon) {
@@ -26,7 +25,7 @@
     cursor: pointer;
     transition: all 0.3s;
     &:hover {
-      background: @pro-header-hover-bg;
+      background: @header-hover-bg;
     }
   }
   .search {
