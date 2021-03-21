@@ -6,7 +6,6 @@ export default [
       { path: '/', redirect: '/projects' },
       { path: '/projects', component: '@/pages/Projects', title: '我的项目' },
       { path: '/projects/:projectId/board', component: '@/pages/Board', title: '我的看板' },
-      { path: '/welcome', component: '@/pages/Welcome', title: '欢迎' },
     ],
   },
 ];

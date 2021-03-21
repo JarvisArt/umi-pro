@@ -1,0 +1,110 @@
+@import '~antd/es/style/themes/default.less';
+
+.search {
+  position: fixed;
+  top: 10px;
+  right: 305px;
+  z-index: 100;
+  color: #fff;
+  line-height: 28px;
+  .input {
+    width: 210px;
+    width: 0;
+    height: 28px;
+    padding: 0;
+    overflow: hidden;
+  }
+  .show {
+    width: 210px;
+    margin-left: 8px;
+    padding: 4px 11px;
+  }
+  :global {
+    .ant-input {
+      border: 0;
+    }
+    .ant-input:focus {
+      box-shadow: 0 0 0 0;
+    }
+  }
+}
+
+.addBtn {
+  position: fixed;
+  right: 10px;
+  bottom: 80px;
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  font-size: 20px;
+  background: @primary-color;
+  border: 4px solid #fff;
+  border-radius: 50px;
+  box-shadow: 0 0 10px 1px #aaa;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+  &:hover {
+    box-shadow: 0 0 16px 2px #999;
+  }
+}
+
+.listItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  background: #fff;
+  background-image: linear-gradient(-20deg, #00cdac 0%, #8ddad5 100%);
+  // background-image: linear-gradient(60deg, #64b3f4 0%, #c2e59c 100%);
+  // background-image: linear-gradient(60deg, #64b3f4 0%, #9ccae5 100%);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: box-shadow 0.3s, border-color 0.3s;
+  &:hover {
+    background-image: linear-gradient(-20deg, #00b5cd 0%, #8dceda 100%);
+    border-color: transparent;
+    box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.12),
+      0 5px 12px 4px rgba(0, 0, 0, 0.09);
+  }
+
+  .dashboardIcon {
+    position: absolute;
+    top: 12px;
+    left: 20px;
+  }
+  .userIcon {
+    position: absolute;
+    bottom: 12px;
+    left: 21px;
+    &::before {
+      position: absolute;
+      bottom: 0;
+      left: 2px;
+      display: block;
+      width: 12px;
+      height: 1px;
+      background: #fff;
+      content: '';
+    }
+  }
+  .ellipsisIcon {
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: @screen-xxl) {
+  .listItem {
+    padding: 40px 0;
+  }
+}
