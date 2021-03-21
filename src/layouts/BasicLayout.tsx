@@ -7,7 +7,7 @@ import type { Route, RouterTypes } from '../typings';
 import { getPageTitle, getProjectId } from '@/utils/utils';
 import { PRO_TITLE } from '@/utils/constants';
 import { useDocumentTitle } from '@/utils/hooks';
-import logo from '../assets/logo.svg';
+import logo from '@/assets/logo.svg';
 import styles from './BasicLayout.less';
 
 const { Header, Content } = Layout;

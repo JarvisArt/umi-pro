@@ -64,4 +64,24 @@ export default {
       phone: '0752-268888888',
     });
   },
+  'POST /api/login/account': async (req: Request, res: Response) => {
+    const { password, username, type } = req.body;
+    await waitTime(2000);
+    if (password === 'ant.design' && username === 'admin') {
+      res.send({
+        status: 'ok',
+        type,
+        currentAuthority: 'admin',
+      });
+      return;
+    }
+    res.send({
+      status: 'error',
+      type,
+      currentAuthority: 'guest',
+    });
+  },
+  'GET /api/login/outLogin': (req: Request, res: Response) => {
+    res.send({ data: {}, success: true });
+  },
 };
