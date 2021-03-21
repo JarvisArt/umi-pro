@@ -1,5 +1,9 @@
 @dateBorderColor: #e9e9e9;
 
+.board {
+  height: 100vh;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -60,14 +64,35 @@
 
 .layout {
   :global {
-    .react-resizable-handle {
-      opacity: 0;
+    .react-grid-item {
+      .react-resizable-handle-n,
+      .react-resizable-handle-s {
+        left: 10px;
+        width: 100%;
+        height: 8px;
+        transform: rotate(0);
+      }
+      .react-resizable-handle-w,
+      .react-resizable-handle-e {
+        top: 10px;
+        width: 8px;
+        height: 100%;
+        transform: rotate(0);
+      }
+      .react-resizable-handle {
+        opacity: 0;
+      }
+    }
+    .react-grid-item.react-grid-placeholder {
+      background: #e6e6e6;
+      opacity: 1;
     }
   }
 }
 
 .dragHandle {
-  padding: 6px 6px;
+  height: 20px;
+  padding: 0 6px;
   line-height: 20px;
   background: #fff;
   border: 1px dashed #ccc;

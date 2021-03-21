@@ -49,7 +49,7 @@ const Board: React.FC = () => {
   );
 
   return (
-    <>
+    <div className={styles.board}>
       <div className={styles.header}>
         <div className={styles.left}>
           <Tabs className={styles.tabs} defaultActiveKey="1" type="card" size="small">
@@ -90,7 +90,7 @@ const Board: React.FC = () => {
           {chartLineRender}
         </div>
       </ResponsiveGridLayout>
-    </>
+    </div>
   );
 };
 
