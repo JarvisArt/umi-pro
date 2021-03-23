@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { history, useModel } from 'umi';
 import { Form, Input, Button, message } from 'antd';
+import GlobalFooter from '@/components/GlobalFooter';
 import { PRO_TITLE } from '@/utils/constants';
 import { LoginParamsType, accountLogin } from '@/services/login';
 import logo from '@/assets/logo.svg';
@@ -58,6 +59,7 @@ const Login: React.FC = () => {
           </p>
         </Form>
       </div>
+      <GlobalFooter />
     </div>
   );
 };
