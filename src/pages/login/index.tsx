@@ -28,12 +28,12 @@ const Login: React.FC = () => {
     const response = await accountLogin(values);
     if (response.status === 'ok') {
       message.success('登录成功！');
-      await fetchUserInfo();
+      fetchUserInfo();
       history.replace('/');
     } else {
       message.error('错误的用户名或密码');
+      setSubmitting(false);
     }
-    setSubmitting(false);
   };
 
   return (

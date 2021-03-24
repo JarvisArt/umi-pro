@@ -4,18 +4,23 @@ body {
   background: rgb(240 242 245);
 }
 
-.header {
-  position: fixed;
-  z-index: 99;
+.basicLayout {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  min-width: @minWidth;
-  height: 48px;
-  padding: 0 16px;
-  color: #fff;
-  line-height: 48px;
+  flex-direction: column;
+  min-height: 100%;
+  :global(.ant-layout-header) {
+    position: fixed;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-width: @minWidth;
+    height: 48px;
+    padding: 0 16px;
+    color: #fff;
+    line-height: 48px;
+  }
 
   .logo {
     display: flex;

@@ -1,3 +1,4 @@
 import useDocumentTitle from './useDocumentTitle';
+import useScrollToTop from './useScrollToTop';
 
-export { useDocumentTitle };
+export { useDocumentTitle, useScrollToTop };
