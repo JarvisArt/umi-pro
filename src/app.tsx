@@ -34,3 +34,10 @@ export async function getInitialState(): Promise<{
     fetchUserInfo,
   };
 }
+
+/**
+ * 在初始加载和路由切换时
+ */
+export function onRouteChange() {
+  window.scrollTo(0, 0);
+}

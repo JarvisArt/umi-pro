@@ -7,7 +7,7 @@ import GlobalFooter from '@/components/GlobalFooter';
 import type { Route, RouterTypes } from '../typings';
 import { getPageTitle, getProjectId } from '@/utils/utils';
 import { PRO_TITLE } from '@/utils/constants';
-import { useDocumentTitle, useScrollToTop } from '@/utils/hooks';
+import { useDocumentTitle } from '@/utils/hooks';
 import logo from '@/assets/logo.svg';
 import styles from './BasicLayout.less';
 
@@ -30,7 +30,6 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
   const projectId = getProjectId();
   const pageTitle = getPageTitle(route?.routes || [], location.pathname);
   useDocumentTitle(pageTitle, PRO_TITLE);
-  useScrollToTop();
 
   return (
     <Layout className={styles.basicLayout}>
