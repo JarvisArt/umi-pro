@@ -1,5 +1,6 @@
 import { history } from 'umi';
 import PageLoading from '@/components/PageLoading';
+import { PRO_TITLE } from '@/utils/constants';
 import { queryCurrent } from './services/user';
 
 /**
@@ -38,6 +39,15 @@ export async function getInitialState(): Promise<{
 /**
  * 在初始加载和路由切换时
  */
-export function onRouteChange() {
-  window.scrollTo(0, 0);
+export function onRouteChange({ matchedRoutes }: any) {
+  // 回到顶部
+  const el = document.scrollingElement || document.documentElement;
+  if (el.scrollTop !== 0) {
+    el.scrollTop = 0;
+  }
+  // 设置标题
+  if (matchedRoutes.length) {
+    const title = matchedRoutes[matchedRoutes.length - 1].route.title || '';
+    document.title = title ? `${title} - ${PRO_TITLE}` : PRO_TITLE;
+  }
 }

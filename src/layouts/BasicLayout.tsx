@@ -4,16 +4,12 @@ import { Layout } from 'antd';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import ProjectNavBar from '@/components/GlobalHeader/ProjectNavBar';
 import GlobalFooter from '@/components/GlobalFooter';
-import type { Route, RouterTypes } from '../typings';
-import { getPageTitle, getProjectId } from '@/utils/utils';
+import { getProjectId } from '@/utils/utils';
 import { PRO_TITLE } from '@/utils/constants';
-import { useDocumentTitle } from '@/utils/hooks';
 import logo from '@/assets/logo.svg';
 import styles from './BasicLayout.less';
 
 const { Header, Content } = Layout;
-
-export type BasicLayoutProps = Partial<RouterTypes<Route>>;
 
 const Logo: React.FC = () => {
   return (
@@ -24,12 +20,8 @@ const Logo: React.FC = () => {
   );
 };
 
-const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
-  const { route, children, location = { pathname: '/' } } = props;
-
+const BasicLayout: React.FC = ({ children }) => {
   const projectId = getProjectId();
-  const pageTitle = getPageTitle(route?.routes || [], location.pathname);
-  useDocumentTitle(pageTitle, PRO_TITLE);
 
   return (
     <Layout className={styles.basicLayout}>
