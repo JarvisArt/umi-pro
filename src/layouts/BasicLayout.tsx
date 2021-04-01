@@ -1,6 +1,7 @@
 import React from 'react';
 import { history } from 'umi';
-import { Layout } from 'antd';
+import zhCN from 'antd/lib/locale/zh_CN';
+import { ConfigProvider, Layout } from 'antd';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import ProjectNavBar from '@/components/GlobalHeader/ProjectNavBar';
 import GlobalFooter from '@/components/GlobalFooter';
@@ -24,15 +25,17 @@ const BasicLayout: React.FC = ({ children }) => {
   const projectId = getProjectId();
 
   return (
-    <Layout className={styles.basicLayout}>
-      <Header>
-        <Logo />
-        {projectId && <ProjectNavBar />}
-        <RightContent />
-      </Header>
-      <Content className={styles.content}>{children}</Content>
-      <GlobalFooter />
-    </Layout>
+    <ConfigProvider locale={zhCN}>
+      <Layout className={styles.basicLayout}>
+        <Header>
+          <Logo />
+          {projectId && <ProjectNavBar />}
+          <RightContent />
+        </Header>
+        <Content className={styles.content}>{children}</Content>
+        <GlobalFooter />
+      </Layout>
+    </ConfigProvider>
   );
 };
 

@@ -5,42 +5,33 @@ import {
   EllipsisOutlined,
   DashboardOutlined,
 } from '@ant-design/icons';
-import { List, Tooltip, Dropdown, Menu, Input } from 'antd';
-import { useState, useRef } from 'react';
 import { history } from 'umi';
+import { useEffect, useState, useRef } from 'react';
+import { List, Tooltip, Dropdown, Menu, Input } from 'antd';
+import OperationModal from './components/OperationForm';
 import classNames from 'classnames';
+import { ProjectDataType } from './data.d';
+import { queryProject } from './service';
 import styles from './index.less';
 
-const list = [
-  { id: 1, name: 'Alipay' },
-  { id: 2, name: 'Angular' },
-  { id: 3, name: 'Ant Design' },
-  { id: 4, name: 'Ant Design Pro' },
-  { id: 5, name: 'Bootstrap' },
-  { id: 6, name: 'React' },
-  { id: 7, name: 'Vue' },
-  { id: 8, name: 'Webpack' },
-  { id: 9, name: 'Webpack' },
-  { id: 10, name: 'Webpack' },
-  { id: 11, name: 'Alipay' },
-  { id: 12, name: 'Angular' },
-  { id: 13, name: 'Ant Design' },
-  { id: 14, name: 'Ant Design Pro' },
-  { id: 15, name: 'Bootstrap' },
-  { id: 16, name: 'React' },
-  { id: 17, name: 'Vue' },
-  { id: 18, name: 'Webpack' },
-  { id: 19, name: 'Webpack' },
-  { id: 20, name: 'Webpack' },
-  { id: 21, name: 'Webpack' },
-  { id: 22, name: 'Webpack' },
-  { id: 23, name: 'Alipay' },
-  { id: 24, name: 'Angular' },
-];
-
-const Projects = () => {
+const Projects: React.FC = () => {
   const inputRef = useRef<Input | null>(null);
   const [searchMode, setSearchMode] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [projects, setProjects] = useState<ProjectDataType[]>([]);
+  const [visible, setVisible] = useState<boolean>(false);
+  const [current, setCurrent] = useState<Partial<ProjectDataType> | undefined>(undefined);
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    setLoading(true);
+    const response = await queryProject();
+    setProjects(response);
+    setLoading(false);
+  };
 
   const toggleSearchMode = () => {
     setSearchMode(!searchMode);
@@ -49,9 +40,27 @@ const Projects = () => {
     }
   };
 
-  const ellipsisMenu = (
+  const showModal = () => {
+    setVisible(true);
+    setCurrent(undefined);
+  };
+
+  const showEditModal = (item: ProjectDataType) => {
+    setVisible(true);
+    setCurrent(item);
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
+
+  const handleSubmit = (values: ProjectDataType) => {
+    console.log(values);
+  };
+
+  const ellipsisMenu = (item: ProjectDataType) => (
     <Menu onClick={(e) => e.domEvent.stopPropagation()}>
-      <Menu.Item>编辑</Menu.Item>
+      <Menu.Item onClick={() => showEditModal(item)}>编辑</Menu.Item>
       <Menu.Item>删除</Menu.Item>
     </Menu>
   );
@@ -63,7 +72,7 @@ const Projects = () => {
   return (
     <>
       <div className={styles.addBtn}>
-        <PlusOutlined />
+        <PlusOutlined onClick={showModal} />
       </div>
       <div className={styles.search}>
         <SearchOutlined style={{ cursor: 'pointer' }} onClick={toggleSearchMode} />
@@ -71,18 +80,19 @@ const Projects = () => {
       </div>
       <List
         rowKey="id"
+        loading={loading}
         grid={{ gutter: 20, column: 4, xxl: 5 }}
         style={{ padding: '20px 20px 0' }}
-        dataSource={list}
+        dataSource={projects}
         renderItem={(item) => (
-          <List.Item key={item.id} onClick={() => history.push('/projects/fe3234/board')}>
+          <List.Item key={item.id} onClick={() => history.push(`/projects/${item.id}/board`)}>
             <div className={styles.listItem}>
               <span>{item.name}</span>
               <DashboardOutlined className={styles.dashboardIcon} />
-              <Tooltip arrowPointAtCenter placement="right" title="项目对接人：Admin">
+              <Tooltip arrowPointAtCenter placement="right" title={`负责人：${item.principal}`}>
                 <UserOutlined className={styles.userIcon} />
               </Tooltip>
-              <Dropdown overlay={ellipsisMenu} trigger={['click']}>
+              <Dropdown overlay={() => ellipsisMenu(item)} trigger={['click']}>
                 <EllipsisOutlined
                   className={styles.ellipsisIcon}
                   onClick={(e) => e.stopPropagation()}
@@ -91,6 +101,12 @@ const Projects = () => {
             </div>
           </List.Item>
         )}
+      />
+      <OperationModal
+        current={current}
+        visible={visible}
+        onCancel={handleCancel}
+        onSubmit={handleSubmit}
       />
     </>
   );
