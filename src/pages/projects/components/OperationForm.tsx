@@ -23,15 +23,11 @@ const OperationModal: React.FC<OperationModalProps> = (props) => {
       form.setFieldsValue({
         ...current,
       });
-    } else {
-      form.resetFields();
     }
   }, [current]);
 
   const handleFinish = (values: ProjectDataType) => {
-    if (onSubmit) {
-      onSubmit(values as ProjectDataType);
-    }
+    onSubmit(values);
   };
 
   return (
@@ -41,6 +37,7 @@ const OperationModal: React.FC<OperationModalProps> = (props) => {
       visible={visible}
       onCancel={onCancel}
       onOk={form.submit}
+      afterClose={form.resetFields}
     >
       <Form {...formLayout} form={form} onFinish={handleFinish}>
         <Form.Item

@@ -15,12 +15,17 @@ export default [
       {
         title: '我的项目',
         path: '/projects',
-        component: '@/pages/Projects',
+        component: '@/pages/projects',
       },
       {
         title: '我的看板',
         path: '/projects/:projectId/board',
-        component: '@/pages/Board',
+        component: '@/pages/board',
+      },
+      {
+        title: '事件分析',
+        path: '/projects/:projectId/analysis',
+        component: '@/pages/analysis',
       },
     ],
   },

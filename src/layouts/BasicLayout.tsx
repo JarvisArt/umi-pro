@@ -21,7 +21,14 @@ const Logo: React.FC = () => {
   );
 };
 
-const BasicLayout: React.FC = ({ children }) => {
+const renderGlobalFooter = (): React.ReactNode => {
+  if (window.location.pathname.match(/\/analysis/)) {
+    return null;
+  }
+  return <GlobalFooter />;
+};
+
+const BasicLayout: React.FC = (props) => {
   const projectId = getProjectId();
 
   return (
@@ -32,8 +39,8 @@ const BasicLayout: React.FC = ({ children }) => {
           {projectId && <ProjectNavBar />}
           <RightContent />
         </Header>
-        <Content className={styles.content}>{children}</Content>
-        <GlobalFooter />
+        <Content className={styles.content}>{props.children}</Content>
+        {renderGlobalFooter()}
       </Layout>
     </ConfigProvider>
   );
