@@ -5,12 +5,24 @@ import {
   CaretDownOutlined,
   FundProjectionScreenOutlined,
 } from '@ant-design/icons';
-import { history } from 'umi';
+import { useState, useEffect } from 'react';
+import { history, useLocation } from 'umi';
 import { Menu, Dropdown } from 'antd';
+import { parsePathParam } from '@/utils/utils';
 import styles from './index.less';
 
 const ProjectNavBar: React.FC = () => {
+  const { pathname } = useLocation();
+  const [selectedKey, setSelectedKey] = useState<string>('');
+
+  useEffect(() => {
+    setSelectedKey(parsePathParam(pathname, 'projects\\/[0-9a-z]*') || '');
+  }, [pathname]);
+
   const onMenuClick = (event: { key: React.Key }) => {
+    if (selectedKey === event.key) {
+      return;
+    }
     history.push(`/projects/hgeksha/${event.key}`);
   };
 
@@ -31,7 +43,7 @@ const ProjectNavBar: React.FC = () => {
           <CaretDownOutlined className={styles.caretDownIcon} />
         </div>
       </Dropdown>
-      <Menu mode="horizontal" theme="dark" onClick={onMenuClick}>
+      <Menu mode="horizontal" theme="dark" selectedKeys={[selectedKey]} onClick={onMenuClick}>
         <Menu.Item key="overview" icon={<DotChartOutlined />}>
           概览
         </Menu.Item>

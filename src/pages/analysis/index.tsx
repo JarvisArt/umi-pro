@@ -1,6 +1,19 @@
+import {
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+  SendOutlined,
+  FunnelPlotOutlined,
+  InboxOutlined,
+  GroupOutlined,
+  ForkOutlined,
+  BoxPlotOutlined,
+  ShareAltOutlined,
+  LaptopOutlined,
+  UnorderedListOutlined,
+  ControlOutlined,
+} from '@ant-design/icons';
 import { useState } from 'react';
-import { Layout, Menu } from 'antd';
-import { MenuUnfoldOutlined, MenuFoldOutlined, AppstoreOutlined } from '@ant-design/icons';
+import { Layout, Menu, Skeleton } from 'antd';
 import styles from './index.less';
 
 const { Sider, Content } = Layout;
@@ -14,51 +27,65 @@ const Analysis: React.FC = () => {
 
   return (
     <div className={styles.analysis}>
+      <div
+        style={{
+          width: collapsed ? 48 : 208,
+          transition: `background-color 0.3s, min-width 0.3s, max-width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1)`,
+        }}
+      />
       <Sider
         theme="light"
         collapsible
-        width={208}
+        width={collapsed ? 48 : 208}
+        collapsedWidth={48}
         trigger={null}
         collapsed={collapsed}
         className={styles.sider}
       >
-        <Menu onClick={handleClick} selectedKeys={[]} openKeys={[]} mode="inline">
-          <Menu.Item key="1" icon={<AppstoreOutlined />}>
-            Option 1
-          </Menu.Item>
-          <Menu.Item key="2" icon={<AppstoreOutlined />}>
-            Option 2
-          </Menu.Item>
-          <Menu.Item key="3" icon={<AppstoreOutlined />}>
-            Option 3
-          </Menu.Item>
-          <Menu.Item key="4" icon={<AppstoreOutlined />}>
-            Option 4
-          </Menu.Item>
-          <Menu.Item key="5" icon={<AppstoreOutlined />}>
-            Option 5
-          </Menu.Item>
-          <Menu.Item key="6" icon={<AppstoreOutlined />}>
-            Option 6
-          </Menu.Item>
-          <Menu.Item key="7" icon={<AppstoreOutlined />}>
-            Option 7
-          </Menu.Item>
-          <Menu.Item key="8" icon={<AppstoreOutlined />}>
-            Option 8
-          </Menu.Item>
-          <Menu.Item key="9" icon={<AppstoreOutlined />}>
-            Option 9
-          </Menu.Item>
-          <Menu.Item key="10" icon={<AppstoreOutlined />}>
-            Option 10
-          </Menu.Item>
-          <Menu.Item title={false} onClick={() => setCollapsed(!collapsed)}>
-            {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-          </Menu.Item>
-        </Menu>
+        <div className={styles.menu}>
+          <Menu mode="inline" onClick={handleClick}>
+            <Menu.Item key="1" icon={<SendOutlined />}>
+              事件分析
+            </Menu.Item>
+            <Menu.Item key="2" icon={<FunnelPlotOutlined />}>
+              漏斗分析
+            </Menu.Item>
+            <Menu.Item key="3" icon={<InboxOutlined />}>
+              留存分析
+            </Menu.Item>
+            <Menu.Item key="4" icon={<GroupOutlined />}>
+              LTV 分析
+            </Menu.Item>
+            <Menu.Item key="5" icon={<ForkOutlined />}>
+              用户路径
+            </Menu.Item>
+            <Menu.Item key="6" icon={<BoxPlotOutlined />}>
+              间隔分析
+            </Menu.Item>
+            <Menu.Item key="7" icon={<ShareAltOutlined />}>
+              归因分析
+            </Menu.Item>
+            <Menu.Item key="8" icon={<UnorderedListOutlined />}>
+              属性分析
+            </Menu.Item>
+            <Menu.Item key="9" icon={<ControlOutlined />}>
+              自定义查询
+            </Menu.Item>
+            <Menu.Item key="10" icon={<LaptopOutlined />}>
+              网页热力分析
+            </Menu.Item>
+          </Menu>
+        </div>
+        <div className={styles.collapsedButton} onClick={() => setCollapsed(!collapsed)}>
+          {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+        </div>
       </Sider>
-      <Content>事件分析</Content>
+      <Content>
+        <div style={{ margin: 20, padding: 20, background: '#fff' }}>
+          <Skeleton />
+          <Skeleton />
+        </div>
+      </Content>
     </div>
   );
 };
