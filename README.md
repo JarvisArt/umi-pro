@@ -58,9 +58,8 @@ $ yarn start
   └─⫸ Commit Type: feat|fix|ui|docs|style|refactor|perf|test|chore|revert|merge|build
 ```
 
-`<type>` 和 `<summary>` 为必填项, `(<scope>)` 为可选项
+`<type>` 和 `<summary>` 为必填项, `(<scope>)` 为可选项，`type` 说明如下：
 
-##### Type
 ```
 feat:       新功能
 fix:        修复bug

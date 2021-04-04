@@ -71,8 +71,8 @@ const Projects: React.FC = () => {
 
   return (
     <>
-      <div className={styles.addBtn}>
-        <PlusOutlined onClick={showModal} />
+      <div className={styles.addBtn} onClick={showModal}>
+        <PlusOutlined />
       </div>
       <div className={styles.search}>
         <SearchOutlined style={{ cursor: 'pointer' }} onClick={toggleSearchMode} />

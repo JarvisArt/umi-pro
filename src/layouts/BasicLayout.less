@@ -1,4 +1,4 @@
-@minWidth: 1200px;
+@import '~@/styles/variables';
 
 .basicLayout {
   display: flex;
@@ -11,11 +11,11 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    min-width: @minWidth;
-    height: 48px;
+    min-width: @layout-min-width;
+    height: @layout-header-height;
     padding: 0 16px;
     color: #fff;
-    line-height: 48px;
+    line-height: @layout-header-height;
   }
 
   .logo {
@@ -34,6 +34,6 @@
 }
 
 .content {
-  min-width: @minWidth;
-  padding-top: 48px;
+  min-width: @layout-min-width;
+  padding-top: @layout-header-height;
 }

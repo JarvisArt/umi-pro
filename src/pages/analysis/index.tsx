@@ -30,7 +30,7 @@ const Analysis: React.FC = () => {
       <div
         style={{
           width: collapsed ? 48 : 208,
-          transition: `background-color 0.3s, min-width 0.3s, max-width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1)`,
+          transition: 'width 0.2s',
         }}
       />
       <Sider
