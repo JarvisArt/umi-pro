@@ -74,9 +74,11 @@ const Projects: React.FC = () => {
       <div className={styles.addBtn} onClick={showModal}>
         <PlusOutlined />
       </div>
-      <div className={styles.search}>
-        <SearchOutlined style={{ cursor: 'pointer' }} onClick={toggleSearchMode} />
-        <Input ref={inputRef} placeholder="输入项目名称" className={inputClass} />
+      <div className={styles.header}>
+        <div className={styles.search}>
+          <SearchOutlined style={{ cursor: 'pointer' }} onClick={toggleSearchMode} />
+          <Input ref={inputRef} placeholder="输入项目名称" className={inputClass} />
+        </div>
       </div>
       <List
         rowKey="id"

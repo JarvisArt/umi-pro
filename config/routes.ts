@@ -1,4 +1,4 @@
-export default [
+const routes = [
   {
     title: '登录',
     path: '/user/login',
@@ -40,3 +40,20 @@ export default [
     ],
   },
 ];
+
+/**
+ * 路由匹配不到渲染404页面
+ */
+const filling404 = (list: any) => {
+  list.forEach((item: any) => {
+    if (!item.routes) {
+      return;
+    }
+    item.routes.push({ component: '@/pages/exception/404' });
+    filling404(item.routes);
+  });
+};
+
+filling404(routes);
+
+export default routes;

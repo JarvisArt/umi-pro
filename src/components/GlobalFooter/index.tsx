@@ -1,5 +1,6 @@
 import { Layout } from 'antd';
 import { GithubOutlined, CopyrightOutlined } from '@ant-design/icons';
+import classNames from 'classnames';
 import styles from './index.less';
 
 const { Footer } = Layout;
@@ -25,9 +26,9 @@ const defaultLinks = [
   },
 ];
 
-const GlobalFooter: React.FC = () => {
+const GlobalFooter: React.FC<{ className?: string }> = ({ className }) => {
   return (
-    <Footer className={styles.footer}>
+    <Footer className={classNames(className, styles.footer)}>
       <div className={styles.links}>
         {defaultLinks.map((link) => (
           <a

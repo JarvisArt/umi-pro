@@ -67,7 +67,7 @@ const renderBoards: React.FC = (boards: any) => {
       resizeHandles={['s', 'w', 'e', 'n', 'sw', 'nw', 'se', 'ne']}
     >
       {boards.map((board: any, index: number) => (
-        <div key={index} data-grid={board}>
+        <div key={index} className={styles.boardItem} data-grid={board}>
           {chartLineRender}
         </div>
       ))}

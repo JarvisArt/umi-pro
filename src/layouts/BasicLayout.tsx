@@ -25,7 +25,7 @@ const renderGlobalFooter = (): React.ReactNode => {
   if (window.location.pathname.match(/\/analysis/)) {
     return null;
   }
-  return <GlobalFooter />;
+  return <GlobalFooter className={styles.globalFooter} />;
 };
 
 const BasicLayout: React.FC = (props) => {
