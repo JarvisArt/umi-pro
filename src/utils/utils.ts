@@ -5,7 +5,7 @@
  * @return {string}
  */
 export const parsePathParam = (pathname: string, param: string): string => {
-  const regExp = new RegExp(`\\/${param}\\/(\\w+)($|\\/)`);
+  const regExp = new RegExp(`\\/${param}\\/([^/]*)($|\\/)`);
   const match = regExp.exec(pathname);
   return match ? match[1] : '';
 };

@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import { ProjectDataType } from './data.d';
+import type { Request, Response } from 'express';
+import type { ProjectDataType } from './data.d';
 
 const projectNames = [
   'Alipay',

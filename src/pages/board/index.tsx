@@ -1,4 +1,5 @@
-import { Select, Button, Tabs } from 'antd';
+import { useEffect, useState } from 'react';
+import { Select, Button, Tabs, Empty } from 'antd';
 import { Chart, LineAdvance } from 'bizcharts';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
@@ -36,17 +37,54 @@ const lineData = [
   { month: 'Dec', city: 'London', temperature: 9.8 },
 ];
 
-const Board: React.FC = () => {
-  const chartLineRender = (
-    <div style={{ width: '100%', height: '100%' }}>
-      <div className={`${styles.dragHandle} dragHandle`}>{/* 用户增长数 */}</div>
-      <div className={styles.chartWrap}>
-        <Chart padding={[30, 20, 60, 40]} autoFit data={lineData}>
-          <LineAdvance shape="smooth" point area position="month*temperature" color="city" />
-        </Chart>
-      </div>
+const chartLineRender = (
+  <div style={{ width: '100%', height: '100%' }}>
+    <div className={`${styles.dragHandle} dragHandle`}>{/* 用户增长数 */}</div>
+    <div className={styles.chartWrap}>
+      <Chart padding={[30, 20, 60, 40]} autoFit data={lineData}>
+        <LineAdvance shape="smooth" point area position="month*temperature" color="city" />
+      </Chart>
     </div>
+  </div>
+);
+
+const renderBoards: React.FC = (boards: any) => {
+  if (boards.length === 0) {
+    return (
+      <Empty
+        style={{ marginTop: 60 }}
+        description={<span style={{ color: '#aaa' }}>暂无看板</span>}
+      />
+    );
+  }
+  return (
+    <ResponsiveGridLayout
+      className={styles.layout}
+      rowHeight={70}
+      margin={[16, 16]}
+      cols={{ lg: 3, md: 3, sm: 3, xs: 3, xxs: 3 }}
+      draggableHandle=".dragHandle"
+      resizeHandles={['s', 'w', 'e', 'n', 'sw', 'nw', 'se', 'ne']}
+    >
+      {boards.map((board: any, index: number) => (
+        <div key={index} data-grid={board}>
+          {chartLineRender}
+        </div>
+      ))}
+    </ResponsiveGridLayout>
   );
+};
+
+const Board: React.FC = () => {
+  const [boards, setBoards] = useState<any>([]);
+
+  useEffect(() => {
+    setBoards([
+      { x: 0, y: 0, w: 1, h: 4 },
+      { x: 1, y: 0, w: 1, h: 4 },
+      { x: 2, y: 0, w: 1, h: 4 },
+    ]);
+  }, []);
 
   return (
     <div className={styles.board}>
@@ -72,24 +110,7 @@ const Board: React.FC = () => {
         </div>
         <Button type="primary">保存看板</Button>
       </div>
-      <ResponsiveGridLayout
-        className={styles.layout}
-        rowHeight={70}
-        margin={[16, 16]}
-        cols={{ lg: 3, md: 3, sm: 3, xs: 3, xxs: 3 }}
-        draggableHandle=".dragHandle"
-        resizeHandles={['s', 'w', 'e', 'n', 'sw', 'nw', 'se', 'ne']}
-      >
-        <div key="1" data-grid={{ x: 0, y: 0, w: 1, h: 4 }}>
-          {chartLineRender}
-        </div>
-        <div key="2" data-grid={{ x: 1, y: 0, w: 1, h: 4 }}>
-          {chartLineRender}
-        </div>
-        <div key="3" data-grid={{ x: 2, y: 0, w: 1, h: 4 }}>
-          {chartLineRender}
-        </div>
-      </ResponsiveGridLayout>
+      {renderBoards(boards)}
     </div>
   );
 };

@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { Modal, Form, Input } from 'antd';
-import { ProjectDataType } from '../data.d';
+import type { ProjectDataType } from '../data.d';
 
-interface OperationModalProps {
+type OperationModalProps = {
   visible: boolean;
   current: Partial<ProjectDataType> | undefined;
   onSubmit: (values: ProjectDataType) => void;
   onCancel: () => void;
-}
+};
 
 const formLayout = {
   labelCol: { span: 6 },

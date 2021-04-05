@@ -19,13 +19,23 @@ export default [
       },
       {
         title: '我的看板',
-        path: '/projects/:projectId/board',
+        path: '/projects/:id/board',
         component: '@/pages/board',
       },
       {
-        title: '事件分析',
-        path: '/projects/:projectId/analysis',
+        path: '/projects/:id/analysis',
         component: '@/pages/analysis',
+        routes: [
+          {
+            path: '/projects/:id/analysis',
+            redirect: '/projects/:id/analysis/event-analysis',
+          },
+          {
+            title: '事件分析',
+            path: '/projects/:id/analysis/event-analysis',
+            component: '@/pages/analysis/event-analysis',
+          },
+        ],
       },
     ],
   },

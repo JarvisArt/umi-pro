@@ -1,5 +1,5 @@
 declare namespace API {
-  export interface CurrentUser {
+  export type CurrentUser = {
     avatar?: string;
     name?: string;
     title?: string;
@@ -12,5 +12,5 @@ declare namespace API {
     userid?: string;
     access?: 'user' | 'guest' | 'admin';
     unreadCount?: number;
-  }
+  };
 }

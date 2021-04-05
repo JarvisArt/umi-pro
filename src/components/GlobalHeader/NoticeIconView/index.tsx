@@ -1,9 +1,9 @@
 import { Badge } from 'antd';
 import styles from './index.less';
 
-export interface NoticeIconProps {
+export type NoticeIconProps = {
   children?: React.ReactElement;
-}
+};
 
 const NoticeIconView: React.FC<NoticeIconProps> = (props) => {
   const { children } = props;

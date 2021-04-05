@@ -11,19 +11,47 @@ import { Menu, Dropdown } from 'antd';
 import { parsePathParam } from '@/utils/utils';
 import styles from './index.less';
 
+const modules = [
+  {
+    key: 'overview',
+    path: '/overview',
+    name: '概览',
+    icon: <DotChartOutlined />,
+  },
+  {
+    key: 'board',
+    path: '/board',
+    name: '看板',
+    icon: <FundProjectionScreenOutlined />,
+  },
+  {
+    key: 'analysis',
+    path: '/analysis/event-analysis',
+    name: '分析',
+    icon: <LineChartOutlined />,
+  },
+  {
+    key: 'setting',
+    path: '/setting',
+    name: '设置',
+    icon: <SettingOutlined />,
+  },
+];
+
 const ProjectNavBar: React.FC = () => {
   const { pathname } = useLocation();
   const [selectedKey, setSelectedKey] = useState<string>('');
 
   useEffect(() => {
-    setSelectedKey(parsePathParam(pathname, 'projects\\/[0-9a-z]*') || '');
+    setSelectedKey(parsePathParam(pathname, 'projects\\/[^/]*') || '');
   }, [pathname]);
 
   const onMenuClick = (event: { key: React.Key }) => {
     if (selectedKey === event.key) {
       return;
     }
-    history.push(`/projects/hgeksha/${event.key}`);
+    const path = modules.find((module) => module.key === event.key)?.path;
+    history.push(`/projects/hgeksha${path}`);
   };
 
   const appMenu = (
@@ -44,18 +72,11 @@ const ProjectNavBar: React.FC = () => {
         </div>
       </Dropdown>
       <Menu mode="horizontal" theme="dark" selectedKeys={[selectedKey]} onClick={onMenuClick}>
-        <Menu.Item key="overview" icon={<DotChartOutlined />}>
-          概览
-        </Menu.Item>
-        <Menu.Item key="board" icon={<FundProjectionScreenOutlined />}>
-          看板
-        </Menu.Item>
-        <Menu.Item key="analysis" icon={<LineChartOutlined />}>
-          分析
-        </Menu.Item>
-        <Menu.Item key="setting" icon={<SettingOutlined />}>
-          设置
-        </Menu.Item>
+        {modules.map((module) => (
+          <Menu.Item key={module.key} icon={module.icon}>
+            {module.name}
+          </Menu.Item>
+        ))}
       </Menu>
     </div>
   );

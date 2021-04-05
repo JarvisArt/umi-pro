@@ -1,9 +1,9 @@
 import request from 'umi-request';
 
-export interface LoginParamsType {
+export type LoginParamsType = {
   userName: string;
   password: string;
-}
+};
 
 export async function accountLogin(params: LoginParamsType) {
   return request('/api/login/account', {

@@ -3,7 +3,8 @@ import { history, useModel } from 'umi';
 import { Form, Input, Button, message } from 'antd';
 import GlobalFooter from '@/components/GlobalFooter';
 import { PRO_TITLE } from '@/utils/constants';
-import { LoginParamsType, accountLogin } from '@/services/login';
+import { accountLogin } from '@/services/login';
+import type { LoginParamsType } from '@/services/login';
 import logo from '@/assets/logo.svg';
 import styles from './index.less';
 

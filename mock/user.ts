@@ -12,7 +12,7 @@ const waitTime = (time: number = 100) => {
 export default {
   // 支持值为 Object 和 Array
   'GET /api/currentUser': async (req: Request, res: Response) => {
-    await waitTime(1000);
+    await waitTime(150);
     res.send({
       name: 'Serati Ma',
       avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',

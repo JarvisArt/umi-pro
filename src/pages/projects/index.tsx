@@ -10,7 +10,7 @@ import { useEffect, useState, useRef } from 'react';
 import { List, Tooltip, Dropdown, Menu, Input } from 'antd';
 import OperationModal from './components/OperationForm';
 import classNames from 'classnames';
-import { ProjectDataType } from './data.d';
+import type { ProjectDataType } from './data.d';
 import { queryProject } from './service';
 import styles from './index.less';
 
