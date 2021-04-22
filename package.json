@@ -15,7 +15,8 @@
     "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less"
   },
   "gitHooks": {
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "commit-msg": "node verifyCommit.js"
   },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",
@@ -42,6 +43,7 @@
     "@types/react-grid-layout": "^1.1.1",
     "@umijs/fabric": "^2.4.10",
     "@umijs/test": "^3.3.3",
+    "chalk": "^4.1.1",
     "cross-env": "^7.0.3",
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.0",

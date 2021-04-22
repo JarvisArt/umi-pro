@@ -25,7 +25,8 @@
     "config/**/*",
     ".eslintrc.js",
     ".stylelintrc.js",
-    ".prettierrc.js"
+    ".prettierrc.js",
+    "verifyCommit.js"
   ],
   "exclude": [
     "node_modules",
