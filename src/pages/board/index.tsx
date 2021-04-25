@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Select, Button, Tabs, Empty } from 'antd';
+import { DatePicker, Button, Tabs, Empty } from 'antd';
 import { Chart, LineAdvance } from 'bizcharts';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import styles from './index.less';
 
-const { Option } = Select;
 const { TabPane } = Tabs;
+const { RangePicker } = DatePicker;
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const lineData = [
@@ -89,26 +89,17 @@ const Board: React.FC = () => {
   return (
     <div className={styles.board}>
       <div className={styles.header}>
-        <div className={styles.left}>
-          <Tabs className={styles.tabs} defaultActiveKey="1" type="card" size="small">
-            <TabPane tab="用户月增长看板" key="1"></TabPane>
-            <TabPane tab="年度流水看板" key="2"></TabPane>
-            <TabPane tab="总浏览量监控" key="3"></TabPane>
-            <TabPane tab="总浏览量监控" key="4"></TabPane>
-            <TabPane tab="总浏览量监控" key="5"></TabPane>
-          </Tabs>
-          <div className={styles.dateSelect}>
-            <span className={styles.dateLabel}>查询时间</span>
-            <Select defaultValue="最近1个月" style={{ width: 120, marginRight: 20 }}>
-              <Option value="最近1个月">最近1个月</Option>
-              <Option value="最近2个月">最近2个月</Option>
-              <Option value="最近3个月">最近3个月</Option>
-              <Option value="最近4个月">最近4个月</Option>
-              <Option value="最近5个月">最近5个月</Option>
-            </Select>
-          </div>
+        <Tabs className={styles.tabs} defaultActiveKey="1">
+          <TabPane tab="用户月增长看板" key="1"></TabPane>
+          <TabPane tab="年度流水看板" key="2"></TabPane>
+          <TabPane tab="总浏览量监控" key="3"></TabPane>
+          <TabPane tab="总浏览量监控" key="4"></TabPane>
+          <TabPane tab="总浏览量监控" key="5"></TabPane>
+        </Tabs>
+        <div>
+          <RangePicker style={{ width: 240, marginRight: 20 }} />
+          <Button type="primary">保存看板</Button>
         </div>
-        <Button type="primary">保存看板</Button>
       </div>
       {renderBoards(boards)}
     </div>

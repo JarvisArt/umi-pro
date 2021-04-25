@@ -1,3 +1,4 @@
+@headerHeight: 50px;
 @dateBorderColor: #e9e9e9;
 
 .board {
@@ -8,56 +9,23 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 50px;
+  height: @headerHeight;
+  margin: 16px 16px 0;
   padding: 0 20px;
   background: #fff;
+  border-radius: 4px;
   box-shadow: 0 0 5px 1px #f1ecec;
 
-  .left {
-    display: flex;
-    align-items: flex-end;
-    height: 50px;
-  }
   .tabs {
     min-width: 580px;
     max-width: 50vw;
     :global {
       .ant-tabs-nav {
+        height: @headerHeight;
         margin-bottom: 0;
-      }
-      .ant-tabs-card.ant-tabs-top > .ant-tabs-nav .ant-tabs-tab-active {
-        border-bottom-color: #f0f2f5;
-      }
-    }
-  }
-  .dateSelect {
-    display: flex;
-    margin-left: 20px;
-    .dateLabel {
-      display: inline-block;
-      padding: 0 8px;
-      line-height: 34px;
-      background: rgb(250, 250, 250);
-      border: 1px solid @dateBorderColor;
-      border-right: 0;
-      border-bottom: 0;
-    }
-    :global {
-      .ant-select-selector {
-        height: 36px;
-        border: 1px solid @dateBorderColor;
-        border-bottom: 0;
-      }
-      .ant-select-selection-item {
-        line-height: 34px;
-      }
-      .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input)
-        .ant-select-selector {
-        border-color: @dateBorderColor;
-        box-shadow: 0 0 0;
-      }
-      .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
-        border-color: @dateBorderColor;
+        &::before {
+          border-bottom: 1px solid #fff;
+        }
       }
     }
   }
