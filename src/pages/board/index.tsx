@@ -97,8 +97,10 @@ const Board: React.FC = () => {
           <TabPane tab="总浏览量监控" key="5"></TabPane>
         </Tabs>
         <div>
-          <RangePicker style={{ width: 240, marginRight: 20 }} />
-          <Button type="primary">保存看板</Button>
+          <RangePicker style={{ width: 240 }} />
+          <Button type="primary" style={{ marginLeft: 10 }}>
+            保存看板
+          </Button>
         </div>
       </div>
       {renderBoards(boards)}
