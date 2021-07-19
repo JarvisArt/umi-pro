@@ -9,31 +9,12 @@
   min-width: @layout-min-width;
 }
 .search {
-  position: absolute;
-  top: 10px;
-  right: 305px;
-  color: #fff;
-  line-height: 28px;
-  .input {
-    width: 210px;
-    width: 0;
-    height: 28px;
-    padding: 0;
-    overflow: hidden;
-  }
-  .show {
-    width: 210px;
-    margin-left: 8px;
-    padding: 4px 11px;
-  }
-  :global {
-    .ant-input {
-      border: 0;
-    }
-    .ant-input:focus {
-      box-shadow: 0 0 0 0;
-    }
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0;
+  background-color: #fff;
+  border-radius: 4px;
 }
 
 .addBtn {

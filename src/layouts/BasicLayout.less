@@ -2,10 +2,11 @@
 
 .basicLayout {
   display: flex;
-  flex-direction: column;
+  flex-direction: column !important;
   min-height: 100% !important;
   :global(.ant-layout-header) {
-    position: fixed;
+    position: sticky;
+    top: 0;
     z-index: 99;
     display: flex;
     align-items: center;
@@ -34,8 +35,8 @@
 }
 
 .content {
+  width: 100% !important;
   min-width: @layout-min-width;
-  padding-top: @layout-header-height;
   background-color: @layout-body-background;
 }
 

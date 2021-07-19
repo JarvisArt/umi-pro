@@ -1,22 +1,15 @@
-import {
-  UserOutlined,
-  PlusOutlined,
-  SearchOutlined,
-  EllipsisOutlined,
-  DashboardOutlined,
-} from '@ant-design/icons';
+import { UserOutlined, PlusOutlined, EllipsisOutlined, DashboardOutlined } from '@ant-design/icons';
 import { history } from 'umi';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { List, Tooltip, Dropdown, Menu, Input } from 'antd';
 import OperationModal from './components/OperationForm';
-import classNames from 'classnames';
 import type { ProjectDataType } from './data.d';
 import { queryProject } from './service';
 import styles from './index.less';
 
+const { Search } = Input;
+
 const Projects: React.FC = () => {
-  const inputRef = useRef<Input | null>(null);
-  const [searchMode, setSearchMode] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [projects, setProjects] = useState<ProjectDataType[]>([]);
   const [visible, setVisible] = useState<boolean>(false);
@@ -31,13 +24,6 @@ const Projects: React.FC = () => {
     const response = await queryProject();
     setProjects(response);
     setLoading(false);
-  };
-
-  const toggleSearchMode = () => {
-    setSearchMode(!searchMode);
-    if (!searchMode && inputRef.current) {
-      inputRef.current.focus();
-    }
   };
 
   const showModal = () => {
@@ -65,20 +51,13 @@ const Projects: React.FC = () => {
     </Menu>
   );
 
-  const inputClass = classNames(styles.input, {
-    [styles.show]: searchMode,
-  });
-
   return (
     <>
       <div className={styles.addBtn} onClick={showModal}>
         <PlusOutlined />
       </div>
-      <div className={styles.header}>
-        <div className={styles.search}>
-          <SearchOutlined style={{ cursor: 'pointer' }} onClick={toggleSearchMode} />
-          <Input ref={inputRef} placeholder="输入项目名称" className={inputClass} />
-        </div>
+      <div className={styles.search}>
+        <Search style={{ width: 450 }} size="large" placeholder="输入项目名称" enterButton="搜索" />
       </div>
       <List
         rowKey="id"
