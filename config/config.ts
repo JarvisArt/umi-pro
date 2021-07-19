@@ -13,4 +13,5 @@ export default defineConfig({
     loading: '@/components/PageLoading/index',
   },
   fastRefresh: {},
+  mfsu: {},
 });
