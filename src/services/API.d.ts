@@ -1,16 +1,11 @@
 declare namespace API {
   export type CurrentUser = {
-    avatar?: string;
-    name?: string;
-    title?: string;
-    group?: string;
-    signature?: string;
-    tags?: {
-      key: string;
-      label: string;
-    }[];
-    userid?: string;
-    access?: 'user' | 'guest' | 'admin';
-    unreadCount?: number;
+    id: string;
+    account: string;
+    name: string;
+    email: string;
+    description: string;
+    allowCreateGroup: boolean;
+    role: 'admin' | 'user';
   };
 }

@@ -73,7 +73,12 @@ const AvatarDropdown: React.FC = () => {
   return (
     <Dropdown overlay={menuHeaderDropdown}>
       <span className={`${styles.action} ${styles.account}`}>
-        <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar" />
+        <Avatar
+          size="small"
+          alt="avatar"
+          className={styles.avatar}
+          src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png"
+        />
         <span className={`${styles.name} anticon`}>{currentUser.name}</span>
       </span>
     </Dropdown>

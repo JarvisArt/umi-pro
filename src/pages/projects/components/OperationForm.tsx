@@ -1,22 +1,23 @@
 import { useEffect } from 'react';
 import { Modal, Form, Input } from 'antd';
-import type { ProjectDataType } from '../data.d';
+import type { ProjectParams } from '../data.d';
 
 type OperationModalProps = {
   visible: boolean;
-  current: Partial<ProjectDataType> | undefined;
-  onSubmit: (values: ProjectDataType) => void;
+  loading: boolean;
+  current: Partial<ProjectParams> | undefined;
+  onSubmit: (values: ProjectParams) => void;
   onCancel: () => void;
 };
 
 const formLayout = {
   labelCol: { span: 6 },
-  wrapperCol: { span: 15 },
+  wrapperCol: { span: 16 },
 };
 
 const OperationModal: React.FC<OperationModalProps> = (props) => {
+  const { visible, current, loading, onCancel, onSubmit } = props;
   const [form] = Form.useForm();
-  const { visible, current, onCancel, onSubmit } = props;
 
   useEffect(() => {
     if (current) {
@@ -26,7 +27,7 @@ const OperationModal: React.FC<OperationModalProps> = (props) => {
     }
   }, [current]);
 
-  const handleFinish = (values: ProjectDataType) => {
+  const handleFinish = async (values: ProjectParams) => {
     onSubmit(values);
   };
 
@@ -37,21 +38,27 @@ const OperationModal: React.FC<OperationModalProps> = (props) => {
       visible={visible}
       onCancel={onCancel}
       onOk={form.submit}
+      confirmLoading={loading}
       afterClose={form.resetFields}
     >
       <Form {...formLayout} form={form} onFinish={handleFinish}>
         <Form.Item
           name="name"
-          label="项目名称"
-          rules={[{ required: true, message: '请输入项目名称' }]}
+          label="项目中文名"
+          rules={[{ required: true, message: '请输入项目中文名' }]}
         >
           <Input placeholder="请输入" />
         </Form.Item>
-        <Form.Item
-          name="principal"
-          label="负责人"
-          rules={[{ required: true, message: '请输入负责人' }]}
-        >
+        {!current && (
+          <Form.Item
+            name="shortName"
+            label="项目英文名"
+            rules={[{ required: true, message: '请输入项目英文名' }]}
+          >
+            <Input placeholder="请输入" />
+          </Form.Item>
+        )}
+        <Form.Item name="master" label="项目对接人">
           <Input placeholder="请输入" />
         </Form.Item>
       </Form>

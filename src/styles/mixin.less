@@ -10,3 +10,22 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+// 文本溢出省略号显示-单行
+.ellipsis-single-line {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// 文本溢出省略号显示-多行
+.ellipsis-multi-line(@n: 1) {
+  display: -webkit-box;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @n;
+}

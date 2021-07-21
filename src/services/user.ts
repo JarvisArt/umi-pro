@@ -1,5 +1,5 @@
 import request from '@/utils/request';
 
-export async function queryCurrent(): Promise<any> {
-  return request('/api/currentUser');
+export function queryCurrent(): Promise<any> {
+  return request.get('/system/user/info');
 }

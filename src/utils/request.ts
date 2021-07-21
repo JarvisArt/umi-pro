@@ -3,7 +3,15 @@
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
 import { extend } from 'umi-request';
-import { notification } from 'antd';
+import { history } from 'umi';
+import { notification, message } from 'antd';
+import { ResponseCode } from '@/utils/constants';
+
+export type ResponseData = {
+  code: number;
+  data?: any;
+  message?: string;
+};
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -46,11 +54,50 @@ const errorHandler = (error: { response: Response }): Response => {
 };
 
 /**
+ * 处理来自后端的错误
+ */
+const checkCode = (data: ResponseData) => {
+  if (data.code !== ResponseCode.Success) {
+    message.error(data.message);
+  }
+  if (data.code === ResponseCode.NotLoggedIn) {
+    history.replace('/user/login');
+  }
+  return data;
+};
+
+/**
  * 配置request请求时的默认参数
  */
 const request = extend({
+  prefix: '/api',
   errorHandler, // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
 });
 
-export default request;
+export default {
+  get(url: string, params?: any) {
+    return request(url, {
+      method: 'get',
+      params,
+    }).then(checkCode);
+  },
+  post(url: string, data?: any) {
+    return request(url, {
+      method: 'post',
+      data,
+    }).then(checkCode);
+  },
+  put(url: string, data?: any) {
+    return request(url, {
+      method: 'put',
+      data,
+    }).then(checkCode);
+  },
+  delete(url: string, data?: any) {
+    return request(url, {
+      method: 'delete',
+      data,
+    }).then(checkCode);
+  },
+};

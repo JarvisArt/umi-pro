@@ -1,17 +1,14 @@
-import request from 'umi-request';
+import request from '@/utils/request';
 
 export type LoginParamsType = {
-  userName: string;
+  account: string;
   password: string;
 };
 
-export async function accountLogin(params: LoginParamsType) {
-  return request('/api/login/account', {
-    method: 'POST',
-    data: params,
-  });
+export function accountLogin(params: LoginParamsType) {
+  return request.post('/portal/login', params);
 }
 
-export async function outLogin() {
-  return request('/api/login/outLogin');
+export function outLogin() {
+  return request.post('/portal/logout');
 }

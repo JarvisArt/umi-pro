@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { history, useModel } from 'umi';
 import { Form, Input, Button, message } from 'antd';
 import GlobalFooter from '@/components/GlobalFooter';
-import { PRO_TITLE } from '@/utils/constants';
+import { PRO_TITLE, ResponseCode } from '@/utils/constants';
 import { accountLogin } from '@/services/login';
 import type { LoginParamsType } from '@/services/login';
 import logo from '@/assets/logo.svg';
@@ -26,15 +26,14 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (values: LoginParamsType) => {
     setSubmitting(true);
-    const response = await accountLogin(values);
-    if (response.status === 'ok') {
-      message.success('登录成功！');
-      fetchUserInfo();
-      history.replace('/');
-    } else {
-      message.error('错误的用户名或密码');
-      setSubmitting(false);
+    const { code } = await accountLogin(values);
+    setSubmitting(false);
+    if (code !== ResponseCode.Success) {
+      return;
     }
+    message.success('登录成功！');
+    fetchUserInfo();
+    history.replace('/');
   };
 
   return (
@@ -45,7 +44,7 @@ const Login: React.FC = () => {
           <span>{PRO_TITLE}</span>
         </div>
         <Form onFinish={handleSubmit}>
-          <FormItem name="username" rules={[{ required: true, message: '用户名是必填项' }]}>
+          <FormItem name="account" rules={[{ required: true, message: '用户名是必填项' }]}>
             <Input placeholder="请输入用户名" />
           </FormItem>
           <FormItem name="password" rules={[{ required: true, message: '密码是必填项' }]}>
@@ -55,7 +54,7 @@ const Login: React.FC = () => {
             登录
           </Button>
           <p>
-            <span>Username：admin</span>
+            <span>Account：admin</span>
             <span>Password：ant.design</span>
           </p>
         </Form>
