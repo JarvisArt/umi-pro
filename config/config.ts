@@ -12,6 +12,10 @@ export default defineConfig({
   dynamicImport: {
     loading: '@/components/PageLoading/index',
   },
+  hash: true,
+  esbuild: {},
+  ignoreMomentLocale: true,
   fastRefresh: {},
   mfsu: {},
+  webpack5: {},
 });
