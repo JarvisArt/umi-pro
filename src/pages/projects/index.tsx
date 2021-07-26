@@ -127,7 +127,7 @@ const Projects: React.FC = () => {
         style={{ padding: '20px 20px 0' }}
         dataSource={getProjects()}
         renderItem={(item) => (
-          <List.Item key={item.id} onClick={() => history.push(`/projects/${item.id}/board`)}>
+          <List.Item key={item.id} onClick={() => history.push(`/projects/${item.id}/dashboard`)}>
             <div className={styles.listItem}>
               <p className={styles.name}>{item.name}</p>
               <DashboardOutlined className={styles.dashboardIcon} />

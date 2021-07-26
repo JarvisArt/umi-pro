@@ -9,10 +9,10 @@ export async function addProject(params: ProjectParams) {
   return request.post('/project/apps', params);
 }
 
-export async function updateProject(id: string, params: ProjectParams) {
-  return request.put(`/project/${id}/name`, params);
+export async function updateProject(projectId: string, params: ProjectParams) {
+  return request.put(`/project/${projectId}/name`, params);
 }
 
-export async function removeProject(id: string) {
-  return request.put(`project/${id}`);
+export async function removeProject(projectId: string) {
+  return request.put(`project/${projectId}`);
 }

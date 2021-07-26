@@ -57,7 +57,7 @@ const errorHandler = (error: { response: Response }): Response => {
  * 处理来自后端的错误
  */
 const checkCode = (data: ResponseData) => {
-  if (data.code !== ResponseCode.Success) {
+  if (data.code !== ResponseCode.Success && data.message) {
     message.error(data.message);
   }
   if (data.code === ResponseCode.NotLoggedIn) {

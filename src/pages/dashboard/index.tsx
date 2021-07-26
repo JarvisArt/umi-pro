@@ -1,14 +1,30 @@
 import { useEffect, useState } from 'react';
-import { DatePicker, Button, Tabs, Empty } from 'antd';
+import { Tabs, Empty, Select } from 'antd';
 import { Chart, LineAdvance } from 'bizcharts';
 import { Responsive, WidthProvider } from 'react-grid-layout';
+import { useProjectId } from '@/utils/hooks';
+import { ResponseCode } from '@/utils/constants';
+import type { DashboardGroupDataType } from './data.d';
+import { queryDashboardGroup } from './service';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
-const { RangePicker } = DatePicker;
+const { Option } = Select;
 const ResponsiveGridLayout = WidthProvider(Responsive);
+
+const periodOptions = [
+  { label: '最近 7 天', value: 'last_days_7' },
+  { label: '最近 14 天', value: 'last_days_14' },
+  { label: '最近 30 天', value: 'last_days_30' },
+  { label: '最近两个月', value: 'last_days_60' },
+  { label: '最近三个月', value: 'last_days_90' },
+  { label: '本月', value: 'this_month' },
+  { label: '上个月', value: 'last_month' },
+  { label: '最近半年', value: 'last_days_180' },
+  { label: '今年', value: 'this_year' },
+];
 
 const lineData = [
   { month: 'Jan', city: 'Tokyo', temperature: 7 },
@@ -48,8 +64,8 @@ const chartLineRender = (
   </div>
 );
 
-const renderBoards: React.FC = (boards: any) => {
-  if (boards.length === 0) {
+const renderDashboards: React.FC = (dashboards: any) => {
+  if (dashboards.length === 0) {
     return (
       <Empty
         style={{ marginTop: 60 }}
@@ -66,8 +82,8 @@ const renderBoards: React.FC = (boards: any) => {
       draggableHandle=".dragHandle"
       resizeHandles={['s', 'w', 'e', 'n', 'sw', 'nw', 'se', 'ne']}
     >
-      {boards.map((board: any, index: number) => (
-        <div key={index} className={styles.boardItem} data-grid={board}>
+      {dashboards.map((dashboard: any, index: number) => (
+        <div key={index} className={styles.dashboardItem} data-grid={dashboard}>
           {chartLineRender}
         </div>
       ))}
@@ -75,37 +91,54 @@ const renderBoards: React.FC = (boards: any) => {
   );
 };
 
-const Board: React.FC = () => {
-  const [boards, setBoards] = useState<any>([]);
+const Dashboard: React.FC = () => {
+  const projectId = useProjectId();
+  const [groups, setGroups] = useState<DashboardGroupDataType[]>([]);
+  const [groupId, setGroupId] = useState<string>('');
+  const [dashboards, setDashboards] = useState<any>([]);
 
   useEffect(() => {
-    setBoards([
+    fetchDashboardGroup();
+    setDashboards([
       { x: 0, y: 0, w: 1, h: 4 },
       { x: 1, y: 0, w: 1, h: 4 },
       { x: 2, y: 0, w: 1, h: 4 },
     ]);
   }, []);
 
+  const fetchDashboardGroup = async () => {
+    const { code, data } = await queryDashboardGroup(projectId);
+    if (code !== ResponseCode.Success) {
+      return;
+    }
+    setGroups(data);
+    setGroupId(data.filter((group: DashboardGroupDataType) => group.isDefault)[0]?.id);
+  };
+
   return (
-    <div className={styles.board}>
+    <div className={styles.dashboard}>
       <div className={styles.header}>
-        <Tabs className={styles.tabs} defaultActiveKey="1">
-          <TabPane tab="用户月增长看板" key="1"></TabPane>
-          <TabPane tab="年度流水看板" key="2"></TabPane>
-          <TabPane tab="总浏览量监控" key="3"></TabPane>
-          <TabPane tab="总浏览量监控" key="4"></TabPane>
-          <TabPane tab="总浏览量监控" key="5"></TabPane>
+        <Tabs className={styles.tabs} activeKey={groupId} onChange={(id) => setGroupId(id)}>
+          {groups.map((item) => (
+            <TabPane tab={item.name} key={item.id}></TabPane>
+          ))}
         </Tabs>
         <div>
-          <RangePicker style={{ width: 240 }} />
-          <Button type="primary" style={{ marginLeft: 10 }}>
+          <Select defaultValue="last_days_7" style={{ width: 140 }}>
+            {periodOptions.map((item) => (
+              <Option value={item.value} key={item.value}>
+                {item.label}
+              </Option>
+            ))}
+          </Select>
+          {/* <Button type="primary" style={{ marginLeft: 10 }}>
             保存看板
-          </Button>
+          </Button> */}
         </div>
       </div>
-      {renderBoards(boards)}
+      {renderDashboards(dashboards)}
     </div>
   );
 };
 
-export default Board;
+export default Dashboard;

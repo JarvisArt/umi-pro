@@ -19,8 +19,8 @@ const routes = [
       },
       {
         title: '我的看板',
-        path: '/projects/:id/board',
-        component: '@/pages/board',
+        path: '/projects/:id/dashboard',
+        component: '@/pages/dashboard',
       },
       {
         path: '/projects/:id/analysis',

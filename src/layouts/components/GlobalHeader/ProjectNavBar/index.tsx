@@ -8,8 +8,17 @@ import {
 import { useState, useEffect } from 'react';
 import { history, useLocation } from 'umi';
 import { Menu, Dropdown } from 'antd';
+import { useProjectId } from '@/utils/hooks';
 import { parsePathParam } from '@/utils/utils';
+import { ResponseCode } from '@/utils/constants';
+import { queryApps } from './service';
 import styles from './index.less';
+
+type AppGroupDataType = {
+  id: string;
+  appId: string;
+  name: string;
+};
 
 const modules = [
   {
@@ -19,8 +28,8 @@ const modules = [
     icon: <DotChartOutlined />,
   },
   {
-    key: 'board',
-    path: '/board',
+    key: 'dashboard',
+    path: '/dashboard',
     name: '看板',
     icon: <FundProjectionScreenOutlined />,
   },
@@ -39,35 +48,65 @@ const modules = [
 ];
 
 const ProjectNavBar: React.FC = () => {
+  const projectId = useProjectId();
   const { pathname } = useLocation();
   const [selectedKey, setSelectedKey] = useState<string>('');
+  const [apps, setApps] = useState<AppGroupDataType[]>([]);
+  const [appId, setAppId] = useState<string>('');
+
+  useEffect(() => {
+    fetchApps();
+  }, []);
 
   useEffect(() => {
     setSelectedKey(parsePathParam(pathname, 'projects\\/[^/]*') || '');
   }, [pathname]);
+
+  const fetchApps = async () => {
+    const { code, data } = await queryApps(projectId);
+    if (code !== ResponseCode.Success) {
+      return;
+    }
+    setApps(data);
+    setAppId(data[0].id);
+  };
+
+  const getAppName = () => {
+    return apps.find((app) => app.id === appId)?.name;
+  };
+
+  const changeAppId = (id: string) => {
+    setAppId(id);
+  };
 
   const onMenuClick = (event: { key: React.Key }) => {
     if (selectedKey === event.key) {
       return;
     }
     const path = modules.find((module) => module.key === event.key)?.path;
-    history.push(`/projects/hgeksha${path}`);
+    history.push(`/projects/${projectId}${path}`);
   };
 
   const appMenu = (
     <Menu>
-      <Menu.Item>蚂蚁金服</Menu.Item>
-      <Menu.Item>蚂蚁金服（开发）</Menu.Item>
-      <Menu.Item>蚂蚁金服（测试）</Menu.Item>
+      {apps.map((app) => (
+        <Menu.Item key={app.id} onClick={() => changeAppId(app.id)}>
+          {app.name}
+        </Menu.Item>
+      ))}
     </Menu>
   );
 
   return (
     <div className={styles.main}>
       <div className={styles.divider}></div>
-      <Dropdown overlay={appMenu} placement="bottomCenter">
+      <Dropdown
+        overlay={appMenu}
+        placement="bottomCenter"
+        disabled={['dashboard', 'setting'].includes(selectedKey)}
+      >
         <div className={styles.projectName}>
-          <span>蚂蚁金服（测试）</span>
+          <span>{getAppName()}</span>
           <CaretDownOutlined className={styles.caretDownIcon} />
         </div>
       </Dropdown>
