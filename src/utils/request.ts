@@ -50,7 +50,7 @@ const errorHandler = (error: { response: Response }): Response => {
       message: '网络异常',
     });
   }
-  return response;
+  return response || {};
 };
 
 /**

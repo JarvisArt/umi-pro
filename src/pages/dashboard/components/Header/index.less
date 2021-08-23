@@ -1,0 +1,36 @@
+@headerHeight: 50px;
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: @headerHeight;
+  margin: 16px 16px 0;
+  padding: 0 20px;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 0 5px 1px #f1ecec;
+
+  .tabs {
+    margin-right: 20px;
+    :global {
+      .ant-tabs-nav {
+        height: @headerHeight;
+        margin-bottom: 0;
+        &::before {
+          border-bottom: 1px solid #fff;
+        }
+      }
+    }
+  }
+
+  .right {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    .select {
+      width: 140px;
+      margin-left: 8px;
+    }
+  }
+}

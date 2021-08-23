@@ -1,0 +1,32 @@
+.chartPanel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  .form {
+    display: flex;
+    align-items: center;
+    padding: 10px 10px 0;
+    :global {
+      .ant-select-multiple .ant-select-selector {
+        border-right: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        .ant-select-selection-overflow {
+          height: 28px;
+        }
+      }
+      .ant-select-single .ant-select-selector {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+      .ant-select-focused .ant-select-selector {
+        border-color: #d9d9d9 !important;
+        box-shadow: 0 0 0 transparent !important;
+      }
+      .ant-select-selector:hover {
+        border-color: #d9d9d9;
+      }
+    }
+  }
+}

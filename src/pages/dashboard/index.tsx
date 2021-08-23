@@ -1,41 +1,27 @@
-import { useEffect, useState } from 'react';
-import { Tabs, Empty, Select, Spin } from 'antd';
+import { useEffect, useState, useRef } from 'react';
+import { EllipsisOutlined, SyncOutlined, AlertOutlined } from '@ant-design/icons';
+import { Empty, Spin, Dropdown, Menu } from 'antd';
 import { Responsive, WidthProvider } from 'react-grid-layout';
+import DashboardHeader from './components/Header';
 import InView from '@/components/InView';
+import ChartPanel from './components/ChartPanel';
 import { useProjectId } from '@/utils/hooks';
 import { ResponseCode } from '@/utils/constants';
-import { queryDashboardGroup, queryDashboards } from './service';
-import type { DashboardGroupDataType, DashboardDataType } from './data.d';
+import type { DashboardType, DashboardDataType } from './data.d';
+import { ChartStatus, PeriodType, RenderType } from './data.d';
+import { queryDashboards, queryChartData } from './service';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import styles from './index.less';
 
-const { TabPane } = Tabs;
-const { Option } = Select;
 const ResponsiveGridLayout = WidthProvider(Responsive);
-
-const periodOptions = [
-  { label: '最近 7 天', value: 'last_days_7' },
-  { label: '最近 14 天', value: 'last_days_14' },
-  { label: '最近 30 天', value: 'last_days_30' },
-  { label: '最近两个月', value: 'last_days_60' },
-  { label: '最近三个月', value: 'last_days_90' },
-  { label: '本月', value: 'this_month' },
-  { label: '上个月', value: 'last_month' },
-  { label: '最近半年', value: 'last_days_180' },
-  { label: '今年', value: 'this_year' },
-];
 
 const Dashboard: React.FC = () => {
   const projectId = useProjectId();
-  const [groups, setGroups] = useState<DashboardGroupDataType[]>([]);
   const [groupId, setGroupId] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
-  const [dashboards, setDashboards] = useState<DashboardDataType[]>([]);
-
-  useEffect(() => {
-    fetchDashboardGroup();
-  }, []);
+  const [dashboards, setDashboards] = useState<DashboardType[]>([]);
+  const period = useRef<PeriodType>(PeriodType.LastDays14);
 
   useEffect(() => {
     if (groupId) {
@@ -44,15 +30,6 @@ const Dashboard: React.FC = () => {
       setLoading(false);
     }
   }, [groupId]);
-
-  const fetchDashboardGroup = async () => {
-    const { code, data } = await queryDashboardGroup(projectId);
-    if (code !== ResponseCode.Success) {
-      return;
-    }
-    setGroups(data);
-    setGroupId(data.filter((group: DashboardGroupDataType) => group.isDefault)[0]?.id);
-  };
 
   const fetchDashboards = async (id: string) => {
     setLoading(true);
@@ -68,12 +45,80 @@ const Dashboard: React.FC = () => {
         grid: {
           x: chart.left - 1 < 0 ? 0 : chart.left - 1, // 兼容旧版
           y: chart.top - 1 < 0 ? 0 : chart.top - 1, // 兼容旧版
-          w: chart.width,
           h: chart.height < 4 ? 4 : chart.height, // 兼容旧版
+          w: chart.width,
           minH: 4,
         },
+        status: undefined,
+        data: undefined,
       })),
     );
+  };
+
+  const changePeriodType = (val: PeriodType) => {
+    period.current = val;
+  };
+
+  const getChartById = (id: string, newData: DashboardType[]) => {
+    return newData.filter((item) => item.id === id)[0];
+  };
+
+  const fetchChartData = async (chart: DashboardType, refresh?: boolean) => {
+    if (!refresh && chart.status !== undefined) {
+      return;
+    }
+    /** 单图数据查询前Loading */
+    const newDashboards = [...dashboards];
+    const target = getChartById(chart.id, newDashboards);
+    target.status = ChartStatus.Loading;
+    setDashboards(newDashboards);
+    /** 单图数据查询 */
+    const { code, data } = await queryChartData(projectId, chart.id, {
+      period: period.current,
+    });
+    /** 单图数据返回异常 */
+    if (code !== ResponseCode.Success) {
+      target.status = code === ChartStatus.BigQuery ? ChartStatus.BigQuery : ChartStatus.Error;
+      setDashboards([...newDashboards]);
+      return;
+    }
+    /** 单图数据返回成功 */
+    target.status = ChartStatus.Success;
+    target.env = data.chart.env;
+    if ([RenderType.CURVE, RenderType.PIE, RenderType.BAR].includes(target.env.renderType)) {
+      target.data = data.chartData;
+    }
+    setDashboards([...newDashboards]);
+  };
+
+  const ellipsisMenu = () => (
+    <Menu onClick={(e) => e.domEvent.stopPropagation()}>
+      <Menu.Item>固定时间</Menu.Item>
+      <Menu.Item>编辑单图</Menu.Item>
+      <Menu.Item>删除单图</Menu.Item>
+    </Menu>
+  );
+
+  const renderChart = (chart: DashboardType) => {
+    if ([RenderType.CURVE, RenderType.PIE, RenderType.BAR].includes(chart.env.renderType)) {
+      return <ChartPanel type={chart.env.renderType} data={chart.data as DashboardDataType} />;
+    }
+    return chart.env.renderType;
+  };
+
+  const renderContent = (chart: DashboardType) => {
+    switch (chart.status) {
+      case ChartStatus.Success:
+        return renderChart(chart);
+      case ChartStatus.BigQuery:
+        return <AlertOutlined className={styles.bigQuery} />;
+      case ChartStatus.Error:
+        return (
+          <SyncOutlined className={styles.refresh} onClick={() => fetchChartData(chart, true)} />
+        );
+      default:
+        return <Spin style={{ margin: 'auto' }} />;
+    }
   };
 
   const renderDashboards = () => {
@@ -95,7 +140,7 @@ const Dashboard: React.FC = () => {
     return (
       <ResponsiveGridLayout
         className={styles.layout}
-        rowHeight={70}
+        rowHeight={85}
         margin={[16, 16]}
         cols={{ lg: 3, md: 3, sm: 3, xs: 3, xxs: 3 }}
         draggableHandle=".dragHandle"
@@ -105,8 +150,18 @@ const Dashboard: React.FC = () => {
       >
         {dashboards.map((chart, index: number) => (
           <div key={chart.id + index} className={styles.dashboardItem} data-grid={chart.grid}>
-            <InView data={chart} onView={(data) => console.log(data)}>
-              <div className={`${styles.dragHandle} dragHandle`}>{chart.name}</div>
+            <InView className={styles.chartWrap} onView={() => fetchChartData(chart)}>
+              <div className={styles.chartHeader}>
+                <div className={`${styles.title} dragHandle`}>{chart.name}</div>
+                <Dropdown
+                  overlay={() => ellipsisMenu()}
+                  trigger={['click']}
+                  placement="bottomRight"
+                >
+                  <EllipsisOutlined style={{ fontSize: 20 }} onClick={(e) => e.stopPropagation()} />
+                </Dropdown>
+              </div>
+              {renderContent(chart)}
             </InView>
           </div>
         ))}
@@ -116,22 +171,13 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className={styles.dashboard}>
-      <div className={styles.header}>
-        <Tabs className={styles.tabs} activeKey={groupId} onChange={(id) => setGroupId(id)}>
-          {groups.map((item) => (
-            <TabPane tab={item.name} key={item.id}></TabPane>
-          ))}
-        </Tabs>
-        <div>
-          <Select defaultValue="last_days_7" style={{ width: 140 }}>
-            {periodOptions.map((item) => (
-              <Option value={item.value} key={item.value}>
-                {item.label}
-              </Option>
-            ))}
-          </Select>
-        </div>
-      </div>
+      <DashboardHeader
+        projectId={projectId}
+        groupId={groupId}
+        period={period.current}
+        changeGroupId={setGroupId}
+        changePeriodType={changePeriodType}
+      />
       {renderDashboards()}
     </div>
   );

@@ -1,18 +1,21 @@
 import useInView from 'react-cool-inview';
 
 export type InViewProps = {
-  data: any;
-  onView: (data: any) => void;
+  className?: string;
+  onView: () => void;
 };
 
 const InView: React.FC<InViewProps> = (props) => {
-  const { children, data, onView } = props;
+  const { children, className, onView } = props;
   const { observe } = useInView<HTMLDivElement>({
-    threshold: 0.5,
-    onEnter: () => onView(data),
+    onEnter: () => onView(),
   });
 
-  return <div ref={observe}>{children}</div>;
+  return (
+    <div ref={observe} className={className}>
+      {children}
+    </div>
+  );
 };
 
 export default InView;
