@@ -1,4 +1,4 @@
-export const PRO_TITLE = 'Ant Design Pro';
+export const PRO_TITLE = 'Friday Tracking Pro';
 
 export enum ResponseCode {
   /** 数据返回成功 */

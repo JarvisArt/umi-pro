@@ -1,7 +1,7 @@
 const routes = [
   {
     title: '登录',
-    path: '/user/login',
+    path: '/login',
     component: '@/pages/login',
   },
   {

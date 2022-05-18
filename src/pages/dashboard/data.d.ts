@@ -20,9 +20,20 @@ export enum RenderType {
   GRID = 'GRID',
   /** URL单图 */
   IFRAME = 'IFRAME',
-  /** TODO: ? */
+  /** 事件制表 */
   EVENT_TABLE = 'EVENTTABLE',
 }
+
+export enum ChartStatus {
+  Error = -1,
+  Loading = 0,
+  Success = 1,
+  BigQuery = ResponseCode.BigQuery,
+}
+
+export type ChartParams = {
+  period: PeriodType;
+};
 
 export type seriesType = {
   name: string;
@@ -36,22 +47,41 @@ export type DashboardDataType = {
 
 export type ChartEnvDataType = {
   renderType: RenderType;
+  url?: string;
+};
+
+export type RetentionValue = {
+  count: number;
+  divisor: number;
+};
+
+export type RetentionDataType = {
+  group: string;
+  count: number;
+  values: RetentionValue[];
 };
 
 export type DashboardType = {
   id: string;
   name: string;
   grid: Layout;
-  status: ChartStatus | undefined;
-  data: DashboardDataType | undefined;
   env: ChartEnvDataType;
+  fixedTime?: PeriodType;
+  status?: ChartStatus;
+  chartData?: DashboardDataType;
+  intervalType?: RetainTimeUnit;
+  displayPeriod?: number;
+  retentions?: RetentionDataType[];
 };
 
-export enum ChartStatus {
-  Error = -1,
-  Loading = 0,
-  Success = 1,
-  BigQuery = ResponseCode.BigQuery,
+/**
+ * TODO: intervalType
+ * 留存的时间单位使用了大写,其他地方使用小写,不规范
+ */
+export enum RetainTimeUnit {
+  DAY = 'DAY',
+  WEEK = 'WEEK',
+  MONTH = 'MONTH',
 }
 
 export enum PeriodType {
@@ -65,7 +95,3 @@ export enum PeriodType {
   LastDays180 = 'last_days_180',
   ThisYear = 'this_year',
 }
-
-export type ChartParams = {
-  period: PeriodType;
-};

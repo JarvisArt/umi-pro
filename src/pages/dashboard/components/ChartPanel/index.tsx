@@ -1,29 +1,36 @@
+import { useState } from 'react';
+import { cloneDeep } from 'lodash';
 import { Select } from 'antd';
 import Line from '../Charts/Line';
 import Pie from '../Charts/Pie';
 import Bar from '../Charts/Bar';
-import type { DashboardDataType } from '../../data.d';
+import type { DashboardDataType, PeriodType } from '../../data.d';
 import { RenderType } from '../../data.d';
+import { periodOptions } from '../Header';
 import styles from './index.less';
-
-const { Option } = Select;
 
 type ChartPanelProps = {
   type: RenderType;
-  data: DashboardDataType;
+  data?: DashboardDataType;
+  period: PeriodType;
+  changePeriod: (period: PeriodType) => void;
 };
 
 const ChartPanel: React.FC<ChartPanelProps> = (props) => {
-  const { type, data } = props;
+  const { type, data = { series: [], xAxis: [] }, period, changePeriod } = props;
+
+  const [group, setGroup] = useState<string[]>(data.series.slice(0, 10).map((t) => t.name));
 
   const renderChart = () => {
+    const chartData = cloneDeep(data);
+    chartData.series = chartData.series.filter((item) => group.includes(item.name));
     switch (type) {
       case RenderType.CURVE:
-        return <Line data={data} />;
+        return <Line data={chartData} />;
       case RenderType.PIE:
-        return <Pie data={data} />;
+        return <Pie data={chartData} />;
       case RenderType.BAR:
-        return <Bar data={data} />;
+        return <Bar data={chartData} />;
       default:
         return null;
     }
@@ -32,16 +39,25 @@ const ChartPanel: React.FC<ChartPanelProps> = (props) => {
   return (
     <div className={styles.chartPanel}>
       <div className={styles.form}>
-        <Select mode="multiple" style={{ flex: 1 }} placeholder="选择分组" maxTagCount="responsive">
-          <Option value="jack">Jack</Option>
-          <Option value="lucy">Lucy</Option>
-          <Option value="Yiminghe">yiminghe</Option>
-        </Select>
-        <Select style={{ flex: 1, maxWidth: 140 }} placeholder="选择时间">
-          <Option value="7">最近7天</Option>
-          <Option value="14">最近14天</Option>
-          <Option value="30">最近30天</Option>
-        </Select>
+        <Select
+          value={group}
+          mode="multiple"
+          style={{ flex: 1 }}
+          placeholder="选择分组"
+          maxTagCount="responsive"
+          options={data.series.map((item) => ({
+            label: item.name,
+            value: item.name,
+          }))}
+          onChange={(value) => setGroup(value)}
+        />
+        <Select
+          defaultValue={period}
+          style={{ flex: 1, maxWidth: 140 }}
+          placeholder="选择时间"
+          options={periodOptions}
+          onChange={changePeriod}
+        />
       </div>
       {renderChart()}
     </div>

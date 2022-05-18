@@ -1,4 +1,5 @@
 @import (reference) '~@/styles/mixin';
+@import (reference) '~@/styles/variables';
 
 @headerHeight: 50px;
 @dateBorderColor: #e9e9e9;
@@ -63,6 +64,16 @@
       font-size: 15px;
       cursor: move;
       .ellipsis-single-line();
+      &::before {
+        display: inline-block;
+        width: 4px;
+        height: 14px;
+        margin-right: 8px;
+        background-color: @primary-color;
+        border-radius: 1px;
+        transform: translateY(2px);
+        content: '';
+      }
     }
   }
 }

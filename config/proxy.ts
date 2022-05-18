@@ -6,9 +6,9 @@
  * https://v2.umijs.org/zh/guide/deploy.html
  */
 export default {
-  '/api/': {
-    target: 'https://preview.pro.ant.design',
+  '/api': {
+    target: 'http://friday.test.seewo.com',
     changeOrigin: true,
-    pathRewrite: { '^': '' },
+    pathRewrite: { '^/api': '' },
   },
 };

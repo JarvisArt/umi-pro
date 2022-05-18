@@ -41,7 +41,7 @@ const Line: React.FC<LineProps> = (props) => {
     grid: {
       left: 12,
       right: 12,
-      bottom: 70,
+      bottom: 74,
       top: 20,
       containLabel: true,
     },

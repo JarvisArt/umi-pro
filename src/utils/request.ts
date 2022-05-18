@@ -61,7 +61,7 @@ const checkCode = (data: ResponseData) => {
     message.error(data.message);
   }
   if (data.code === ResponseCode.NotLoggedIn) {
-    history.replace('/user/login');
+    history.replace('/login');
   }
   return data;
 };

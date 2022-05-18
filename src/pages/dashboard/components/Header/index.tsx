@@ -8,7 +8,7 @@ import styles from './index.less';
 
 const { TabPane } = Tabs;
 
-const periodOptions = [
+export const periodOptions = [
   {
     label: '最近 7 天',
     value: PeriodType.LastDays7,
@@ -76,7 +76,7 @@ const Header: React.FC<HeaderProps> = (props) => {
     <div className={styles.header}>
       <Tabs className={styles.tabs} activeKey={groupId} onChange={changeGroupId}>
         {groups.map((item) => (
-          <TabPane tab={item.name} key={item.id}></TabPane>
+          <TabPane tab={item.name} key={item.id} />
         ))}
       </Tabs>
       <div className={styles.right}>

@@ -19,12 +19,12 @@ export async function getInitialState(): Promise<{
       const { data } = await queryCurrent();
       return data;
     } catch (error) {
-      history.push('/user/login');
+      history.push('/login');
     }
     return undefined;
   };
   // 如果是登录页面，不执行
-  if (history.location.pathname !== '/user/login') {
+  if (history.location.pathname !== '/login') {
     const currentUser = await fetchUserInfo();
     return {
       fetchUserInfo,

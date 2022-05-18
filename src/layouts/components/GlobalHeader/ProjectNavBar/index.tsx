@@ -99,12 +99,8 @@ const ProjectNavBar: React.FC = () => {
 
   return (
     <div className={styles.main}>
-      <div className={styles.divider}></div>
-      <Dropdown
-        overlay={appMenu}
-        placement="bottomCenter"
-        disabled={['dashboard', 'setting'].includes(selectedKey)}
-      >
+      <div className={styles.divider} />
+      <Dropdown overlay={appMenu} disabled={['dashboard', 'setting'].includes(selectedKey)}>
         <div className={styles.projectName}>
           <span>{getAppName()}</span>
           <CaretDownOutlined className={styles.caretDownIcon} />

@@ -35,6 +35,7 @@ const GlobalFooter: React.FC<{ className?: string }> = ({ className }) => {
             key={link.key}
             title={link.key}
             target={link.blankTarget ? '_blank' : '_self'}
+            rel="noreferrer"
             href={link.href}
           >
             {link.title}
@@ -42,7 +43,7 @@ const GlobalFooter: React.FC<{ className?: string }> = ({ className }) => {
         ))}
       </div>
       <div className={styles.copyright}>
-        Copyright <CopyrightOutlined /> 2021 蚂蚁金服体验技术部出品
+        Copyright <CopyrightOutlined /> 2022 蚂蚁金服体验技术部出品
       </div>
     </Footer>
   );

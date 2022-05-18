@@ -7,7 +7,7 @@ import styles from './index.less';
 
 const loginOut = async () => {
   await outLogin();
-  history.replace('/user/login');
+  history.replace('/login');
 };
 
 const AvatarDropdown: React.FC = () => {
